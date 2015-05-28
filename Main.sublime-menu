@@ -1,0 +1,39 @@
+[
+  {
+    "id": "tools",
+    "caption": "Tools",
+    "mnemonic": "t",
+    "children": [
+      {
+        "id": "packageBackup",
+        "caption": "Backup/Restore Packages",
+        "children": [
+          {
+            "caption": "Backup Packages To Zip (Recommended)",
+            "command": "backup_packages_to_zip"
+          },
+          {
+            "caption": "Restore Packages From Zip (Recommended)",
+            "command": "restore_packages_from_zip"
+          },
+          {
+            "caption": "Backup Packages To Folder",
+            "command": "backup_packages_to_folder"
+          },
+          {
+            "caption": "Restore Packages From Folder",
+            "command": "restore_packages_from_folder"
+          },
+          {
+            "caption": "Backup Installed Packages List Only",
+            "command": "backup_installed_packages_list"
+          },
+          {
+            "caption": "Restore Installed Packages List Only",
+            "command": "restore_installed_packages_list"
+          }
+        ]
+      }
+    ]
+  }
+]
