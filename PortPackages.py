@@ -75,7 +75,7 @@ class BackupPackagesToFolderCommand(sublime_plugin.WindowCommand):
         _removeExistingBackup(_userSettingsBackupFolder)
         try:
             shutil.copytree(_userSettingsFolder, _userSettingsBackupFolder)
-        except e:
+        except Exception as e:
             raise e
 
 
@@ -92,7 +92,7 @@ class RestorePackagesFromFolderCommand(sublime_plugin.WindowCommand):
                 shutil.copytree(_userSettingsBackupFolder, _userSettingsFolder)
                 sublime.message_dialog(
                     'Packages list & settings have been updated. Please restart Sublime Text to download the missing packages.')
-            except e:
+            except Exception as e:
                 raise e
         else:
             sublime.error_message(
@@ -111,7 +111,7 @@ class BackupPackagesToZipCommand(sublime_plugin.WindowCommand):
         try:
             shutil.make_archive(
                 _userSettingsBackupFolder, 'zip', _userSettingsFolder)
-        except e:
+        except Exception as e:
             raise e
 
 
@@ -129,7 +129,7 @@ class RestorePackagesFromZipCommand(sublime_plugin.WindowCommand):
                     z.extractall(_userSettingsFolder)
                 sublime.message_dialog(
                     'Packages list & settings have been updated. Please restart Sublime Text to download the missing packages.')
-            except e:
+            except Exception as e:
                 raise e
         else:
             sublime.error_message(
