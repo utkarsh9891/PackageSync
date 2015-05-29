@@ -1,6 +1,6 @@
 import sublime
 import sublime_plugin
-from os import path, remove
+import os
 import shutil
 import zipfile
 
