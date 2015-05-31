@@ -31,4 +31,8 @@ This package currently supports the following functionalities:
 
 > This package is currently in development phase & still requires additional features. Any feedback/suggestion is welcome.
 
+<<<<<<< HEAD
 _-- Utkarsh_
+=======
+_-- Utkarsh_
+>>>>>>> origin/master
