@@ -1,0 +1,19 @@
+    ____                __                          _____                    
+   / __ \ ____ _ _____ / /__ ____ _ ____ _ ___     / ___/ __  __ ____   _____
+  / /_/ // __ `// ___// //_// __ `// __ `// _ \    \__ \ / / / // __ \ / ___/
+ / ____// /_/ // /__ / ,<  / /_/ // /_/ //  __/   ___/ // /_/ // / / // /__  
+/_/     \__,_/ \___//_/|_| \__,_/ \__, / \___/   /____/ \__, //_/ /_/ \___/  
+                                 /____/                /____/                
+
+Store off-line backup of your packages & restore them on the same or any other machine.
+
+Do note that in order to restore your plugins, you require a working internet connection.
+PackageSync only syncs your packages list as well as your user settings. But the packages
+are actually downloaded upon re-launch for installation.
+
+For details of the package & it's usage, please visit 
+     ==========================================
+     https://github.com/utkarsh9891/PackageSync
+     ==========================================
+
+Thank you!

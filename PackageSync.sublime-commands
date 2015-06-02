@@ -1,0 +1,26 @@
+[
+  {
+    "caption": "PackageSync: Backup Packages To Zip (Recommended)",
+    "command": "backup_packages_to_zip"
+  },
+  {
+    "caption": "PackageSync: Restore Packages From Zip (Recommended)",
+    "command": "restore_packages_from_zip"
+  },
+  {
+    "caption": "PackageSync: Backup Packages To Folder",
+    "command": "backup_packages_to_folder"
+  },
+  {
+    "caption": "PackageSync: Restore Packages From Folder",
+    "command": "restore_packages_from_folder"
+  },
+  {
+    "caption": "PackageSync: Backup Installed Packages List Only",
+    "command": "backup_installed_packages_list"
+  },
+  {
+    "caption": "PackageSync: Restore Installed Packages List Only",
+    "command": "restore_installed_packages_list"
+  }
+]

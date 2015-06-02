@@ -1,12 +1,12 @@
 [
   {
-    "id": "tools",
     "caption": "Tools",
+    "id": "tools",
     "mnemonic": "t",
     "children": [
       {
+        "caption": "PackageSync",
         "id": "packageBackup",
-        "caption": "Package Sync",
         "children": [
           {
             "caption": "Backup Packages To Zip (Recommended)",
@@ -35,5 +35,37 @@
         ]
       }
     ]
-  }
+  },
+  // {
+  //   "caption": "Preferences",
+  //   "id": "preferences",
+  //   "mnemonic": "n",
+  //   "children":
+  //   [
+  //     {
+  //       "caption": "Package Settings",
+  //       "id": "package-settings",
+  //       "mnemonic": "P",
+  //       "children":
+  //       [
+  //         {
+  //           "caption": "PackageSync",
+  //           "children":
+  //           [
+  //             {
+  //               "command": "open_file",
+  //               "args": { "file": "${packages}/PackageSync/PackageSync.sublime-settings" },
+  //               "caption": "Settings – Default"
+  //             },
+  //             {
+  //               "command": "open_file",
+  //               "args": { "file": "${packages}/User/PackageSync.sublime-settings" },
+  //               "caption": "Settings – User"
+  //             }
+  //           ]
+  //         }
+  //       ]
+  //     }
+  //   ]
+  // }
 ]
