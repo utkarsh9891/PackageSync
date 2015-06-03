@@ -11,23 +11,30 @@ import json
 # def get_settings(name, default=None):
 #     return _settings.get(name, default)
 
-#: Path to folder where backups are stored
-_backupLocation = os.path.join(os.path.expanduser('~'), 'Desktop')
 
-#: Path of file to be used when backing up to or restoring from the sublime-settings file for Package Control
-_packageControlSettingsBackup = os.path.join(
-    _backupLocation, 'SublimePackagesList.txt')
+def _initPaths():
+    #: Path to folder where backups are stored
+    global _backupLocation
+    _backupLocation = os.path.join(os.path.expanduser('~'), 'Desktop')
 
-#: Path of the installed '/packages/user/' folder to backup or restore
-_userSettingsFolder = os.path.join(sublime.packages_path(), 'User')
+    #: Path of file to be used when backing up to or restoring from the sublime-settings file for Package Control
+    global _packageControlSettingsBackup
+    _packageControlSettingsBackup = os.path.join(
+        _backupLocation, 'SublimePackagesList.txt')
 
-#: Path to be used when backing up to or restoring from the '/packages/user' folder as a folder
-_userSettingsBackupFolder = os.path.join(
-    _backupLocation, 'SublimePackagesBackup')
+    #: Path of the installed '/packages/user/' folder to backup or restore
+    global _userSettingsFolder
+    _userSettingsFolder = os.path.join(sublime.packages_path(), 'User')
 
-#: Path to be used when backing up to or restoring from the '/packages/user' folder as a zip file
-_userSettingsBackupZip = os.path.join(
-    _backupLocation, 'SublimePackagesBackup.zip')
+    #: Path to be used when backing up to or restoring from the '/packages/user' folder as a folder
+    global _userSettingsBackupFolder
+    _userSettingsBackupFolder = os.path.join(
+        _backupLocation, 'SublimePackagesBackup')
+
+    #: Path to be used when backing up to or restoring from the '/packages/user' folder as a zip file
+    global _userSettingsBackupZip
+    _userSettingsBackupZip = os.path.join(
+        _backupLocation, 'SublimePackagesBackup.zip')
 
 
 def _removeExistingBackup(backupPath):
@@ -39,6 +46,9 @@ def _removeExistingBackup(backupPath):
 
 class BackupInstalledPackagesListCommand(sublime_plugin.WindowCommand):
 
+    def __init__(self, pluginClass):
+        _initPaths()
+
     def run(self):
         """ Backup the sublime-settings file for Package Control.
         This file contains the list of installed packages.
@@ -47,13 +57,17 @@ class BackupInstalledPackagesListCommand(sublime_plugin.WindowCommand):
 
         _packageControlSettings = sublime.load_settings(
             'Package Control.sublime-settings')
-        _installed_packages = _packageControlSettings.get('installed_packages') or []
+        _installed_packages = _packageControlSettings.get(
+            'installed_packages') or []
 
         with open(_packageControlSettingsBackup, 'w') as _backupFile:
             json.dump({'installed_packages': _installed_packages}, _backupFile)
 
 
 class RestoreInstalledPackagesListCommand(sublime_plugin.WindowCommand):
+
+    def __init__(self, pluginClass):
+        _initPaths()
 
     def run(self):
         """ Restore the sublime-settings file for Package Control.
@@ -81,6 +95,9 @@ class RestoreInstalledPackagesListCommand(sublime_plugin.WindowCommand):
 
 class BackupPackagesToFolderCommand(sublime_plugin.WindowCommand):
 
+    def __init__(self, pluginClass):
+        _initPaths()
+
     def run(self):
         """ Backup the "/Packages/User" folder to the backup location.
         This backs up the sublime-settings file created by user settings.
@@ -94,6 +111,9 @@ class BackupPackagesToFolderCommand(sublime_plugin.WindowCommand):
 
 
 class RestorePackagesFromFolderCommand(sublime_plugin.WindowCommand):
+
+    def __init__(self, pluginClass):
+        _initPaths()
 
     def run(self):
         """ Restore the "/Packages/User" folder from the backup location.
@@ -115,6 +135,9 @@ class RestorePackagesFromFolderCommand(sublime_plugin.WindowCommand):
 
 class BackupPackagesToZipCommand(sublime_plugin.WindowCommand):
 
+    def __init__(self, pluginClass):
+        _initPaths()
+
     def run(self):
         """ Backup the "/Packages/User" folder to the backup location.
         This backs up the sublime-settings file created by user settings.
@@ -130,6 +153,9 @@ class BackupPackagesToZipCommand(sublime_plugin.WindowCommand):
 
 
 class RestorePackagesFromZipCommand(sublime_plugin.WindowCommand):
+
+    def __init__(self, pluginClass):
+        _initPaths()
 
     def run(self):
         """ Restore the "/Packages/User" folder from the backup location.
