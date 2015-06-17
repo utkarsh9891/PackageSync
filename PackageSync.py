@@ -4,12 +4,7 @@ import os
 import shutil
 import zipfile
 import json
-
-
-# _settings = sublime.load_settings('PackageSync.sublime-settings')
-
-# def get_settings(name, default=None):
-#     return _settings.get(name, default)
+import sys
 
 
 def _initPaths():
@@ -43,6 +38,30 @@ def _removeExistingBackup(backupPath):
     elif os.path.isfile(backupPath):
         os.remove(backupPath)
 
+    lastRunFile = os.path.join(
+        sublime.packages_path(), "User", "Package Control.last-run")
+    if os.path.isfile(lastRunFile):
+        os.remove(lastRunFile)
+
+
+def _installNewPackages():
+    try:
+        # Remove the last-run file in order to trigger the package installation
+        lastRunFile = os.path.join(
+            sublime.packages_path(), "User", "Package Control.last-run")
+        if os.path.isfile(lastRunFile):
+            os.remove(lastRunFile)
+
+        # Import packageControlCleaner
+        cleanupModule = sys.modules[
+            "Package Control.package_control.package_cleanup"]
+        packageControlCleaner = cleanupModule.PackageCleanup()
+        packageControlCleaner.start()
+    except Exception as e:
+        print(
+            "PackageSync: Error while installing packages via Package Control.")
+        raise e
+
 
 class BackupInstalledPackagesListCommand(sublime_plugin.WindowCommand):
 
@@ -55,13 +74,22 @@ class BackupInstalledPackagesListCommand(sublime_plugin.WindowCommand):
         The backup is stored on the backup location with the name specified in the
         config file. """
 
-        _packageControlSettings = sublime.load_settings(
-            'Package Control.sublime-settings')
-        _installed_packages = _packageControlSettings.get(
-            'installed_packages') or []
+        try:
+            _packageControlSettings = sublime.load_settings(
+                'Package Control.sublime-settings')
+            _installed_packages = _packageControlSettings.get(
+                'installed_packages') or []
 
-        with open(_packageControlSettingsBackup, 'w') as _backupFile:
-            json.dump({'installed_packages': _installed_packages}, _backupFile)
+            with open(_packageControlSettingsBackup, 'w') as _backupFile:
+                json.dump(
+                    {'installed_packages': _installed_packages}, _backupFile)
+
+            print("PackageSync: Installed packages List backed up to %s" %
+                  _packageControlSettingsBackup)
+        except Exception as e:
+            print(
+                "PackageSync: Error while backing up installed packages list")
+            raise e
 
 
 class RestoreInstalledPackagesListCommand(sublime_plugin.WindowCommand):
@@ -76,18 +104,25 @@ class RestoreInstalledPackagesListCommand(sublime_plugin.WindowCommand):
         specified in the config file. """
 
         if os.path.isfile(_packageControlSettingsBackup):
-            with open(_packageControlSettingsBackup, 'r') as _backupFile:
-                _installed_packages = json.load(
-                    _backupFile)['installed_packages']
+            try:
+                with open(_packageControlSettingsBackup, 'r') as _backupFile:
+                    _installed_packages = json.load(
+                        _backupFile)['installed_packages']
 
-                _packageControlSettings = sublime.load_settings(
-                    'Package Control.sublime-settings')
-                _packageControlSettings.set(
-                    'installed_packages', _installed_packages)
-                sublime.save_settings('Package Control.sublime-settings')
+                    _packageControlSettings = sublime.load_settings(
+                        'Package Control.sublime-settings')
+                    _packageControlSettings.set(
+                        'installed_packages', _installed_packages)
+                    sublime.save_settings('Package Control.sublime-settings')
 
-                sublime.message_dialog(
-                    'Packages list has been updated. Please restart Sublime Text to download the missing packages.')
+                # sublime.message_dialog(
+                    # 'Packages list has been updated. Please restart Sublime Text to download the missing packages.')
+                _installNewPackages()
+
+            except Exception as e:
+                print(
+                    "PackageSync: Error while restoring packages from package list")
+                raise e
         else:
             sublime.error_message(
                 'Could not find packages list backup file at location %s' % _packageControlSettingsBackup)
@@ -107,6 +142,7 @@ class BackupPackagesToFolderCommand(sublime_plugin.WindowCommand):
         try:
             shutil.copytree(_userSettingsFolder, _userSettingsBackupFolder)
         except Exception as e:
+            print("PackageSync: Error while backing up packages to folder")
             raise e
 
 
@@ -124,9 +160,12 @@ class RestorePackagesFromFolderCommand(sublime_plugin.WindowCommand):
             try:
                 shutil.rmtree(_userSettingsFolder)
                 shutil.copytree(_userSettingsBackupFolder, _userSettingsFolder)
-                sublime.message_dialog(
-                    'Packages list & settings have been updated. Please restart Sublime Text to download the missing packages.')
+                # sublime.message_dialog(
+                # 'Packages list & settings have been updated. Please restart Sublime Text to download the missing packages.')
+                _installNewPackages()
             except Exception as e:
+                print(
+                    "PackageSync: Error while restoring packages from folder")
                 raise e
         else:
             sublime.error_message(
@@ -143,12 +182,12 @@ class BackupPackagesToZipCommand(sublime_plugin.WindowCommand):
         This backs up the sublime-settings file created by user settings.
         Package Control settings file is also inherently backed up. """
 
-        if os.path.isfile(_userSettingsBackupZip):
-            os.remove(_userSettingsBackupZip)
+        _removeExistingBackup(_userSettingsBackupZip)
         try:
             shutil.make_archive(
                 _userSettingsBackupFolder, 'zip', _userSettingsFolder)
         except Exception as e:
+            print("PackageSync: Error while backing up packages to zip file")
             raise e
 
 
@@ -167,9 +206,12 @@ class RestorePackagesFromZipCommand(sublime_plugin.WindowCommand):
                 shutil.rmtree(_userSettingsFolder)
                 with zipfile.ZipFile(_userSettingsBackupZip, 'r') as z:
                     z.extractall(_userSettingsFolder)
-                sublime.message_dialog(
-                    'Packages list & settings have been updated. Please restart Sublime Text to download the missing packages.')
+                # sublime.message_dialog(
+                    # 'Packages list & settings have been updated. Please restart Sublime Text to download the missing packages.')
+                _installNewPackages()
             except Exception as e:
+                print(
+                    "PackageSync: Error while restoring packages from zip file")
                 raise e
         else:
             sublime.error_message(

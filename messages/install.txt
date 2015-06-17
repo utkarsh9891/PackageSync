@@ -7,9 +7,8 @@
 
 Store off-line backup of your packages & restore them on the same or any other machine.
 
-Do note that in order to restore your plugins, you require a working internet connection.
-PackageSync only syncs your packages list as well as your user settings. But the packages
-are actually downloaded upon re-launch for installation.
+Do note that PackageSync only syncs your packages list and your user settings.
+But the actual installation of missing/new packages requires a working internet connection.
 
 For details of the package & it's usage, please visit 
      ==========================================

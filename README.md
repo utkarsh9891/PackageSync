@@ -28,7 +28,7 @@ This package currently supports the following functionalities:
   
     Restores only the installed packages list from a file _`SublimePackagesList.txt`_ on the Desktop. User settings are ignored in this option.
 
-> **_Do note that in order to restore your plugins, you require a working internet connection. PackageSync only syncs your packages list as well as your user settings. But the packages are actually downloaded upon re-launch for installation._**
+> **_Do note that PackageSync only syncs your packages list and your user settings. But the actual installation of missing/new packages requires a working internet connection._**
 
 > This package is currently in development phase & still requires additional features. Any feedback/suggestion is welcome.
 
