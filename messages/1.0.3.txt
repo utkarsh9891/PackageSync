@@ -1,0 +1,10 @@
+=============
+Release 1.0.3
+=============
+
+PackageSync now does not require restarting sublime text to
+install packages.
+
+Just run the command to restore from the backup & the missing/new
+packages would be automatically installed in the same session.
+
