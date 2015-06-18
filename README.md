@@ -22,7 +22,7 @@ This package currently supports the following functionalities:
 ## Usage
 The commands are available under the menu _`Tools -> PackageSync`_.
 
-Alternatively, from inside Sublime Text, open Package Control's Command Pallet: <kbd>CTRL</kbd> <kbd>SHIFT</kbd> <kbd>P</kbd> (Windows, Linux) or <kbd>CMD</kbd> <kbd>SHIFT</kbd> <kbd>P</kbd> on Mac & search for `PackageSync:` to get the list of available commands.
+Alternatively, from inside Sublime Text, open Package Control's Command Pallet: <kbd>CTRL</kbd> <kbd>SHIFT</kbd> <kbd>P</kbd> (Windows, Linux) or <kbd>CMD</kbd> <kbd>SHIFT</kbd> <kbd>P</kbd> (Mac) & search for `PackageSync:` to get the list of available commands.
 
 ## Installation
 ### Package Control
@@ -30,7 +30,7 @@ Alternatively, from inside Sublime Text, open Package Control's Command Pallet: 
 The preferred method of installation is via [Sublime Package Control][wbond].
 
 1. [Install Sublime Package Control][wbond 2]
-2. From inside Sublime Text, open Package Control's Command Pallet: <kbd>CTRL</kbd> <kbd>SHIFT</kbd> <kbd>P</kbd> (Windows, Linux) or <kbd>CMD</kbd> <kbd>SHIFT</kbd> <kbd>P</kbd> on Mac.
+2. From inside Sublime Text, open Package Control's Command Pallet: <kbd>CTRL</kbd> <kbd>SHIFT</kbd> <kbd>P</kbd> (Windows, Linux) or <kbd>CMD</kbd> <kbd>SHIFT</kbd> <kbd>P</kbd> (Mac).
 3. Type `install package` and hit Return. A list of available packages will be displayed.
 4. Type `PackageSync` and hit Return. The package will be downloaded to the appropriate directory.
 
