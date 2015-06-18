@@ -27,12 +27,12 @@ Alternatively, from inside Sublime Text, open Package Control's Command Pallet: 
 ## Installation
 ### Package Control
 
-The preferred method of installation is via [Sublime Package Control][wbond].
+The preferred method of installation is via [Sublime Package Control](https://packagecontrol.io).
 
-1. [Install Sublime Package Control][wbond 2]
+1. [Install Sublime Package Control](https://packagecontrol.io/installation)
 2. From inside Sublime Text, open Package Control's Command Pallet: <kbd>CTRL</kbd> <kbd>SHIFT</kbd> <kbd>P</kbd> (Windows, Linux) or <kbd>CMD</kbd> <kbd>SHIFT</kbd> <kbd>P</kbd> (Mac).
-3. Type `install package` and hit Return. A list of available packages will be displayed.
-4. Type `PackageSync` and hit Return. The package will be downloaded to the appropriate directory.
+3. Type `install package`, select command `Package Control: Install Package` and hit Return. A list of available packages will be displayed.
+4. Type `PackageSync`, select the `PackageSync` package and hit Return. The package will be downloaded to the appropriate directory.
 
 ### Manual Installation
 
