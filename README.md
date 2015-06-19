@@ -51,7 +51,7 @@ The features listed above should now be available.
 
 ## Note to Users
 
-Please use the form [PackageSync Feedback](https://docs.google.com/forms/d/10FKoKJD6hWvwEnzzH7KSTE1LJuJDzr-QTh4QrVlQe-4/viewform) for providing any Feedback, Suggestions or Issues that you face while using or installing PackageSync.
+Please use the form [PackageSync Feedback](http://goo.gl/forms/hM2eaHb0Ne) for providing any Feedback, Suggestions or Issues that you face while using or installing PackageSync.
 
 > Do note that PackageSync only syncs your __*packages list*__ and your __*user settings*__. But the actual *installation of missing/new packages* requires a working internet connection.
 
