@@ -29,7 +29,7 @@ Alternatively, from inside Sublime Text, open Package Control's Command Pallet: 
 
 ## Installation
 
-### Package Control
+#### Package Control
 
 The preferred method of installation is via [Sublime Package Control](https://packagecontrol.io).
 
@@ -38,7 +38,7 @@ The preferred method of installation is via [Sublime Package Control](https://pa
 3. Type `install package`, select command `Package Control: Install Package` and hit Return. A list of available packages will be displayed.
 4. Type `PackageSync`, select the `PackageSync` package and hit Return. The package will be downloaded to the appropriate directory.
 
-### Manual Installation
+#### Manual Installation
 
 1. Download or clone this repository to a directory `PackageSync` in the Sublime Text Packages directory for your platform:
     * Mac: `git clone https://github.com/utkarsh9891/PackageSync.git ~/Library/Application\ Support/Sublime\ Text\ 3/Packages/PackageSync`
