@@ -1,0 +1,45 @@
+{
+	// Decides if the user is asked for providing location to back up to or restore from
+	// If set as true, user is prompted every time he backs up or restores
+	// If set as false, the location specified in settings is used.
+	// If no location has been specified in settings, by default user's desktop is used for backup.
+	"prompt_for_location": true,
+
+	// The file path to use for backing up or restoring only the package list
+	"list_backup_path": "",
+	
+	// The path to use for backing up or restoring package list & user settings using a zip file
+	"zip_backup_path": "",
+	
+    // The folder path to use for backing up or restoring package list & user settings.
+	"folder_backup_path": "",
+
+	// List of files to ignore when syncing
+	"ignore_files": [
+		"*.DS_Store",
+		"Package Control.last-run",
+		"Package Control.ca-list",
+		"Package Control.ca-bundle",
+		"Package Control.system-ca-bundle"
+	],
+
+	// Directories to ignore when syncing
+	"ignore_dirs": [
+		"Package Control.cache",
+		"Package Control.ca-cert"
+	],
+
+	// Files to include, as long they do not match a pattern in files_to_ignore
+	"include_files": [
+		"*.sublime-build",
+		"*.sublime-commands",
+		"*.sublime-completions",
+		"*.sublime-keymap",
+		"*.sublime-menu",
+		"*.sublime-settings",
+		"*.sublime-snippet",
+		"*.sublime-macro",
+		"*.tmLanguage",
+		"*.tmTheme"
+	]
+}

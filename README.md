@@ -10,22 +10,59 @@ This package currently supports the following functionalities:
 
 #### Backup/Restore via a Zip file (Recommended)
   * __Backup__ - This backs up your package list & the custom settings you have made for each of the packages into a zipped file.
-  The zipped file is stored with the name _`SublimePackagesBackup.zip`_ on the Desktop.
-  * __Restore__ - This restores packages list & their user settings from the zipped file _`SublimePackagesBackup.zip`_ on the Desktop.
+  * __Restore__ - This restores packages list & their user settings from the zipped file backup created using PackageSync.
 
 #### Backup/Restore via folder
-  * __Backup__ - Works the same way as the zip file, with the only difference that the contents are placed in a folder _`SublimePackagesBackup`_ on the Desktop instead of a zip file.
-  * __Restore__ - Works the same way as a zip file, with the only difference that the contents are fetched from a folder _`SublimePackagesBackup`_ on the Desktop instead of a zip file.
+  * __Backup__ - Works the same way as the zip file, with the only difference that the contents are placed in a folder instead of a zip file.
+  > The user-setting file for PackageSync (PackageSync.sublime-settings) is never backed up.
+  * __Restore__ - Works the same way as a zip file, with the only difference that the contents are fetched from a folder instead of a zip file.
 
 #### Backup/Restore only Package List
-  * __Backup__ - Backs up only the installed packages list to a file _`SublimePackagesList.txt`_ on the Desktop. User settings are ignored in this option.
-  * __Restore__ - Restores only the installed packages list from a file _`SublimePackagesList.txt`_ on the Desktop. User settings are ignored in this option.
+  * __Backup__ - Backs up only the installed packages list to a file. User settings are ignored in this option.
+  > The user-setting file for PackageSync (PackageSync.sublime-settings) is never backed up.
+  * __Restore__ - Restores only the installed packages list from a file. User settings are ignored in this option.
 
 ## Usage
 
 The commands are available under the menu _`Tools -> PackageSync`_.
 
 Alternatively, from inside Sublime Text, open Package Control's Command Pallet: <kbd>CTRL</kbd> <kbd>SHIFT</kbd> <kbd>P</kbd> (Windows, Linux) or <kbd>CMD</kbd> <kbd>SHIFT</kbd> <kbd>P</kbd> (Mac) & search for `PackageSync:` to get the list of available commands.
+
+## Settings
+
+PackageSync provides the following user configurable settings:
+
+#### prompt_for_location *[boolean, true by default]*
+Decides if the user is asked for providing location to back up to or restore from.  
+If set as true, user is prompted every time for a path upon back up or restore operation.  
+If set as false, the location specified in settings is used. If no location has been specified in settings, by default user's desktop is used for backup.
+
+#### zip_backup_path *[string]*
+The zip file path to use for backing up or restoring package list & user settings.  
+> *`"prompt_for_location" = false`* & `"zip_backup_path" = ""`  
+This combination backs up & restores using the zip file _`SublimePackagesBackup.zip`_ on the current user's Desktop. It also overrides any existing backup at this location without confirmation.
+
+#### folder_backup_path *[string]*
+The folder path to use for backing up or restoring package list & user settings.  
+> *`"prompt_for_location" = false`* & `"folder_backup_path" = ""`  
+This combination backs up & restores using the folder _`SublimePackagesBackup`_ on the current user's Desktop. It also overrides any existing backup at this location without confirmation.
+
+#### list_backup_path *[string]*
+The file path to use for backing up or restoring only the package list.  
+> *`"prompt_for_location" = false`* & `"list_backup_path" = ""`  
+This combination backs up & restores using the file _`SublimePackagesList.txt`_ on the current user's Desktop. It also overrides any existing backup at this location without confirmation.
+
+#### ignore_files *[array]*
+The list of files to ignore when backing up.  
+It supports wildcarded file names as well. Supported wildcard entries are '*', '?', '[seq]' & '[!seq]'. For further details, please see the [fnmatch documentation](https://docs.python.org/2/library/fnmatch.html).
+
+#### ignore_dirs *[array]*
+Directories to ignore when backing up.
+
+#### include_files *[array]*
+The list of files to include when backing up.  
+Do note that __*ignore_files holds higher priority as compared to include_files*__. So a file matching both the settings would essentially be ignored, as governed by ignore_files.  
+It supports wildcarded file names as well. Supported wildcard entries are '*', '?', '[seq]' & '[!seq]'. For further details, please see the [fnmatch documentation](https://docs.python.org/2/library/fnmatch.html).
 
 ## Installation
 
@@ -51,7 +88,7 @@ The features listed above should now be available.
 
 ## Note to Users
 
-Please use the form [PackageSync Feedback](http://goo.gl/forms/hM2eaHb0Ne) for providing any Feedback, Suggestions or Issues that you face while using or installing PackageSync.
+Please use the form [PackageSync Feedback](http://goo.gl/forms/hM2eaHb0Ne) for providing any Feedback or Suggestions or for reporting Issues that you face while using or installing PackageSync.
 
 > Do note that PackageSync only syncs your __*packages list*__ and your __*user settings*__. But the actual *installation of missing/new packages* requires a working internet connection.
 
@@ -61,7 +98,7 @@ Please use the form [PackageSync Feedback](http://goo.gl/forms/hM2eaHb0Ne) for p
 
 All files in this package is licensed under the MIT license.
 
-Copyright (c) 2015 Utkarsh <utkarsh9891@gmail.com>
+Copyright (c) 2015 Utkarsh (<utkarsh9891@gmail.com>)
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

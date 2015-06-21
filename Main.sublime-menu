@@ -36,36 +36,36 @@
       }
     ]
   },
-  // {
-  //   "caption": "Preferences",
-  //   "id": "preferences",
-  //   "mnemonic": "n",
-  //   "children":
-  //   [
-  //     {
-  //       "caption": "Package Settings",
-  //       "id": "package-settings",
-  //       "mnemonic": "P",
-  //       "children":
-  //       [
-  //         {
-  //           "caption": "PackageSync",
-  //           "children":
-  //           [
-  //             {
-  //               "command": "open_file",
-  //               "args": { "file": "${packages}/PackageSync/PackageSync.sublime-settings" },
-  //               "caption": "Settings – Default"
-  //             },
-  //             {
-  //               "command": "open_file",
-  //               "args": { "file": "${packages}/User/PackageSync.sublime-settings" },
-  //               "caption": "Settings – User"
-  //             }
-  //           ]
-  //         }
-  //       ]
-  //     }
-  //   ]
-  // }
+  {
+    "caption": "Preferences",
+    "id": "preferences",
+    "mnemonic": "n",
+    "children":
+    [
+      {
+        "caption": "Package Settings",
+        "id": "package-settings",
+        "mnemonic": "P",
+        "children":
+        [
+          {
+            "caption": "PackageSync",
+            "children":
+            [
+              {
+                "command": "open_file",
+                "args": { "file": "${packages}/PackageSync/PackageSync.sublime-settings" },
+                "caption": "Settings – Default"
+              },
+              {
+                "command": "open_file",
+                "args": { "file": "${packages}/User/PackageSync.sublime-settings" },
+                "caption": "Settings – User"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
 ]
