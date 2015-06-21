@@ -4,23 +4,31 @@ Store off-line backup of your packages & restore them on the same or any other m
 
 > Online syncing of packages coming in soon. :thumbsup:
 
+## Table of Contents
+  + [Features](#features)
+  + [Usage](#usage)
+  + [Settings](#settings)
+  + [Installation](#installation)
+  + [Note to Users](#note-to-users)
+  + [License](#license)
+
 ## Features
 
 This package currently supports the following functionalities:
 
 #### Backup/Restore via a Zip file (Recommended)
-  * __Backup__ - This backs up your package list & the custom settings you have made for each of the packages into a zipped file.
-  * __Restore__ - This restores packages list & their user settings from the zipped file backup created using PackageSync.
+  + __Backup__ - This backs up your package list & the custom settings you have made for each of the packages into a zipped file.
+  + __Restore__ - This restores packages list & their user settings from the zipped file backup created using PackageSync.
 
 #### Backup/Restore via folder
-  * __Backup__ - Works the same way as the zip file, with the only difference that the contents are placed in a folder instead of a zip file.
-  > The user-setting file for PackageSync (PackageSync.sublime-settings) is never backed up.
-  * __Restore__ - Works the same way as a zip file, with the only difference that the contents are fetched from a folder instead of a zip file.
+  + __Backup__ - Works the same way as the zip file, with the only difference that the contents are placed in a folder instead of a zip file.
+  + __Restore__ - Works the same way as a zip file, with the only difference that the contents are fetched from a folder instead of a zip file.
 
 #### Backup/Restore only Package List
-  * __Backup__ - Backs up only the installed packages list to a file. User settings are ignored in this option.
-  > The user-setting file for PackageSync (PackageSync.sublime-settings) is never backed up.
-  * __Restore__ - Restores only the installed packages list from a file. User settings are ignored in this option.
+  + __Backup__ - Backs up only the installed packages list to a file. All user settings are ignored in this option.
+  + __Restore__ - Restores only the installed packages list from a file. User settings are ignored in this option.
+
+> *The user-setting file for PackageSync (PackageSync.sublime-settings) is never backed up.*
 
 ## Usage
 
@@ -40,17 +48,17 @@ If set as false, the location specified in settings is used. If no location has 
 #### zip_backup_path *[string]*
 The zip file path to use for backing up or restoring package list & user settings.  
 > *`"prompt_for_location" = false`* & `"zip_backup_path" = ""`  
-This combination backs up & restores using the zip file _`SublimePackagesBackup.zip`_ on the current user's Desktop. It also overrides any existing backup at this location without confirmation.
+> This combination backs up & restores using the zip file _`SublimePackagesBackup.zip`_ on the current user's Desktop. It also overrides any existing backup at this location without confirmation.
 
 #### folder_backup_path *[string]*
 The folder path to use for backing up or restoring package list & user settings.  
 > *`"prompt_for_location" = false`* & `"folder_backup_path" = ""`  
-This combination backs up & restores using the folder _`SublimePackagesBackup`_ on the current user's Desktop. It also overrides any existing backup at this location without confirmation.
+> This combination backs up & restores using the folder _`SublimePackagesBackup`_ on the current user's Desktop. It also overrides any existing backup at this location without confirmation.
 
 #### list_backup_path *[string]*
 The file path to use for backing up or restoring only the package list.  
 > *`"prompt_for_location" = false`* & `"list_backup_path" = ""`  
-This combination backs up & restores using the file _`SublimePackagesList.txt`_ on the current user's Desktop. It also overrides any existing backup at this location without confirmation.
+> This combination backs up & restores using the file _`SublimePackagesList.txt`_ on the current user's Desktop. It also overrides any existing backup at this location without confirmation.
 
 #### ignore_files *[array]*
 The list of files to ignore when backing up.  
@@ -78,9 +86,9 @@ The preferred method of installation is via [Sublime Package Control](https://pa
 #### Manual Installation
 
 1. Download or clone this repository to a directory `PackageSync` in the Sublime Text Packages directory for your platform:
-    * Mac: `git clone https://github.com/utkarsh9891/PackageSync.git ~/Library/Application\ Support/Sublime\ Text\ 3/Packages/PackageSync`
-    * Windows: `git clone https://github.com/utkarsh9891/PackageSync.git %APPDATA%\Sublime/ Text/ 3/\PackageSync`
-    * Linux: `git clone https://github.com/utkarsh9891/PackageSync.git ~/.Sublime\ Text\ 3/Packages/PackageSync`
+    + Mac: `git clone https://github.com/utkarsh9891/PackageSync.git ~/Library/Application\ Support/Sublime\ Text\ 3/Packages/PackageSync`
+    + Windows: `git clone https://github.com/utkarsh9891/PackageSync.git %APPDATA%\Sublime/ Text/ 3/\PackageSync`
+    + Linux: `git clone https://github.com/utkarsh9891/PackageSync.git ~/.Sublime\ Text\ 3/Packages/PackageSync`
 2. Restart Sublime Text to complete installation.
 
 The features listed above should now be available.
@@ -90,7 +98,7 @@ The features listed above should now be available.
 
 Please use the form [PackageSync Feedback](http://goo.gl/forms/hM2eaHb0Ne) for providing any Feedback or Suggestions or for reporting Issues that you face while using or installing PackageSync.
 
-> Do note that PackageSync only syncs your __*packages list*__ and your __*user settings*__. But the actual *installation of missing/new packages* requires a working internet connection.
+> Do note that PackageSync only syncs your __*packages list*__ and your __*user settings*__ offline. But the actual __*installation of missing/new packages*__ requires a working internet connection.
 
 > Additionally, this package is currently in development phase & still requires additional features. The online syncing support is soon to be added.
 
