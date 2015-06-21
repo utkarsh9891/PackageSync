@@ -1,0 +1,14 @@
+=============
+Release 1.1.0
+=============
+
+The package now supports user defined settings for location to
+backup from or restore to.
+
+Also, user now has the ability to provide a separate location 
+for each backup/restore operation. For this, the setting "prompt_for_location"
+needs to be turned on. Read the documentation for more details.
+
+Also, the ability to ignore specific files/folders & a restriction to the
+types of files that can be synced has also been added.
+This setting is also user configurable.
