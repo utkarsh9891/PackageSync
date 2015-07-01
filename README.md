@@ -40,39 +40,39 @@ Alternatively, from inside Sublime Text, open Package Control's Command Pallet: 
 
 PackageSync provides the following user configurable settings:
 
-#### prompt\_for\_location *[boolean, true by default]*
+#### prompt_for_location *[boolean, true by default]*
 Decides if the user is asked for providing location to back up to or restore from.  
 If set as true, user is prompted every time for a path upon back up or restore operation.  
 If set as false, the location specified in settings is used. If no location has been specified in settings, by default user's desktop is used for backup.
 
-#### zip\_backup\_path *[string]*
+#### zip_backup_path *[string]*
 The zip file path to use for backing up or restoring package list & user settings.  
-> *`"prompt\_for\_location" = false`* & `"zip\_backup\_path" = ""`  
+> *`"prompt_for_location" = false`* & `"zip_backup_path" = ""`  
 > This combination backs up & restores using the zip file `SublimePackagesBackup.zip` on the current user's Desktop. It also overrides any existing backup at this location without confirmation.
 
-#### folder\_backup\_path *[string]*
+#### folder_backup_path *[string]*
 The folder path to use for backing up or restoring package list & user settings.  
-> *`"prompt\_for\_location" = false`* & `"folder\_backup\_path" = ""`  
+> *`"prompt_for_location" = false`* & `"folder_backup_path" = ""`  
 > This combination backs up & restores using the folder `SublimePackagesBackup` on the current user's Desktop. It also overrides any existing backup at this location without confirmation.
 
-#### list\_backup\_path *[string]*
+#### list_backup_path *[string]*
 The file path to use for backing up or restoring only the package list.  
-> *`"prompt\_for\_location" = false`* & `"list\_backup\_path" = ""`  
+> *`"prompt_for_location" = false`* & `"list_backup_path" = ""`  
 > This combination backs up & restores using the file `SublimePackagesList.txt` on the current user's Desktop. It also overrides any existing backup at this location without confirmation.
 
-#### ignore\_files *[array]*
+#### ignore_files *[array]*
 The list of files to ignore when backing up.  
 It supports wildcarded file names as well. Supported wildcard entries are '*', '?', '[seq]' & '[!seq]'. For further details, please see the [fnmatch documentation](https://docs.python.org/2/library/fnmatch.html).
 
-#### include\_files *[array]*
+#### include_files *[array]*
 The list of files to include when backing up.  
-Do note that __*ignore\_files holds higher priority as compared to include\_files*__. So a file matching both the settings would essentially be ignored, as governed by ignore\_files. Also, the user settings for PackageSync (PackageSync.sublime-settings) would __never__ be synced.  
+Do note that __*ignore_files holds higher priority as compared to include_files*__. So a file matching both the settings would essentially be ignored, as governed by ignore_files. Also, the user settings for PackageSync (PackageSync.sublime-settings) would __never__ be synced.  
 It supports wildcarded file names as well. Supported wildcard entries are '*', '?', '[seq]' & '[!seq]'. For further details, please see the [fnmatch documentation](https://docs.python.org/2/library/fnmatch.html).
 
-#### ignore\_dirs *[array]*
+#### ignore_dirs *[array]*
 Directories to ignore when backing up.  
 By default, all directories created by other packages are included. Only the directories specified in this list are ignored while syncing.  
-> Do note that an "include\_dirs" option has not been provided on purpose.  
+> Do note that an "include_dirs" option has not been provided on purpose.  
 > This has been done in order to avoid confusion for the user when syncing across OSX, WIN & LINUX mahcines as path would be different across all machines of the same user.
 
 ## Installation
