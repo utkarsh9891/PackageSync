@@ -1,5 +1,5 @@
 =============
-Release 1.1.0
+Release 1.2.0
 =============
 
 Following file types are now also included by default when syncing:
