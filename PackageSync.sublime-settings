@@ -23,23 +23,28 @@
 		"Package Control.system-ca-bundle"
 	],
 
-	// Directories to ignore when syncing
-	"ignore_dirs": [
-		"Package Control.cache",
-		"Package Control.ca-cert"
-	],
-
 	// Files to include, as long they do not match a pattern in files_to_ignore
 	"include_files": [
 		"*.sublime-build",
 		"*.sublime-commands",
 		"*.sublime-completions",
 		"*.sublime-keymap",
+		"*.sublime-mousemap",
 		"*.sublime-menu",
 		"*.sublime-settings",
 		"*.sublime-snippet",
 		"*.sublime-macro",
 		"*.tmLanguage",
-		"*.tmTheme"
+		"*.tmTheme",
+		"*.json",
+		"*.py",
+		"*.md",
+		"*.txt"
+	],
+
+	// Directories to ignore when syncing
+	"ignore_dirs": [
+		"Package Control.cache",
+		"Package Control.ca-cert"
 	]
 }
