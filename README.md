@@ -34,7 +34,7 @@ This package currently supports the following functionalities:
 
 The commands are available under the menu `Tools -> PackageSync`.
 
-Alternatively, from inside Sublime Text, open Package Control's Command Pallet: <kbd>CTRL</kbd> <kbd>SHIFT</kbd> <kbd>P</kbd> (Windows, Linux) or <kbd>CMD</kbd> <kbd>SHIFT</kbd> <kbd>P</kbd> (Mac) & search for `PackageSync:` to get the list of available commands.
+Alternatively, from inside Sublime Text, open Package Control's Command Pallet: <kbd>CTRL</kbd>+<kbd>SHIFT</kbd>+<kbd>P</kbd> (Windows, Linux) or <kbd>CMD</kbd>+<kbd>SHIFT</kbd>+<kbd>P</kbd> (Mac) & search for `PackageSync:` to get the list of available commands.
 
 ## Settings
 
