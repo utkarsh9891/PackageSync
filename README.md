@@ -47,17 +47,17 @@ If set as false, the location specified in settings is used. If no location has 
 
 #### zip_backup_path *[string]*
 The zip file path to use for backing up or restoring package list & user settings.  
-> *`"prompt_for_location" = false`* & `"zip_backup_path" = ""`  
+> `"prompt_for_location" = false` & `"zip_backup_path" = ""`  
 > This combination backs up & restores using the zip file `SublimePackagesBackup.zip` on the current user's Desktop. It also overrides any existing backup at this location without confirmation.
 
 #### folder_backup_path *[string]*
 The folder path to use for backing up or restoring package list & user settings.  
-> *`"prompt_for_location" = false`* & `"folder_backup_path" = ""`  
+> `"prompt_for_location" = false` & `"folder_backup_path" = ""`  
 > This combination backs up & restores using the folder `SublimePackagesBackup` on the current user's Desktop. It also overrides any existing backup at this location without confirmation.
 
 #### list_backup_path *[string]*
 The file path to use for backing up or restoring only the package list.  
-> *`"prompt_for_location" = false`* & `"list_backup_path" = ""`  
+> `"prompt_for_location" = false` & `"list_backup_path" = ""`  
 > This combination backs up & restores using the file `SublimePackagesList.txt` on the current user's Desktop. It also overrides any existing backup at this location without confirmation.
 
 #### ignore_files *[array]*
