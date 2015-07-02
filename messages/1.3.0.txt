@@ -1,0 +1,28 @@
+=============
+Release 1.3.0
+=============
+
+File inclusion & exclusion list has been restructured.
+
+By default, files of the following format are included:
+- *.sublime-* (with the exclusion of *.sublime-package)
+- *.tmLanguage
+- *.tmTheme
+- *.tmPreferences
+- *.json
+- *.png
+- *.txt
+- *.py
+- *.md
+
+By default, files of the following format are ignored:
+- *.sublime-package (The packages are installed via Package Control
+       when restoring the backup.)
+- *.DS_Store
+- Package Control.last-run
+- Package Control.ca-list
+- Package Control.ca-bundle
+- Package Control.system-ca-bundle
+
+This has been done in order to help users sync their custom packages as well
+as to cater to the requirements of other packages.

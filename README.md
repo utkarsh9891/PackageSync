@@ -62,12 +62,31 @@ The file path to use for backing up or restoring only the package list.
 
 #### ignore_files *[array]*
 The list of files to ignore when backing up.  
-It supports wildcarded file names as well. Supported wildcard entries are '*', '?', '[seq]' & '[!seq]'. For further details, please see the [fnmatch documentation](https://docs.python.org/2/library/fnmatch.html).
+It supports wildcarded file names as well. Supported wildcard entries are '*', '?', '[seq]' & '[!seq]'. For further details, please see the [fnmatch documentation](https://docs.python.org/2/library/fnmatch.html).  
+> By default, files of the following format are ignored:
+> + \*.sublime-package *(The packages are installed via Package Control when restoring the backup.)*
+> + \*.DS_Store
+> + Package Control.last-run
+> + Package Control.ca-list
+> + Package Control.ca-bundle
+> + Package Control.system-ca-bundle
 
 #### include_files *[array]*
 The list of files to include when backing up.  
-Do note that __*ignore_files holds higher priority as compared to include_files*__. So a file matching both the settings would essentially be ignored, as governed by ignore_files. Also, the user settings for PackageSync (PackageSync.sublime-settings) would __never__ be synced.  
-It supports wildcarded file names as well. Supported wildcard entries are '*', '?', '[seq]' & '[!seq]'. For further details, please see the [fnmatch documentation](https://docs.python.org/2/library/fnmatch.html).
+Note: __*ignore_files holds higher priority as compared to include_files*__. So a file matching both the settings would essentially be ignored, as governed by ignore_files.  
+It supports wildcarded file names as well. Supported wildcard entries are '*', '?', '[seq]' & '[!seq]'. For further details, please see the [fnmatch documentation](https://docs.python.org/2/library/fnmatch.html).  
+> The user settings for PackageSync (PackageSync.sublime-settings) would __never__ be synced, even if added to this list.
+
+> By default, files of the following format are included:
+> + \*.sublime-\* *(with the exclusion of *.sublime-package)*
+> + \*.tmLanguage
+> + \*.tmTheme
+> + \*.tmPreferences
+> + \*.json
+> + \*.png
+> + \*.txt
+> + \*.py
+> + \*.md
 
 #### ignore_dirs *[array]*
 Directories to ignore when backing up.  

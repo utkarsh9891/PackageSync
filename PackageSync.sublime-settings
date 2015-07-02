@@ -20,26 +20,21 @@
 		"Package Control.last-run",
 		"Package Control.ca-list",
 		"Package Control.ca-bundle",
-		"Package Control.system-ca-bundle"
+		"Package Control.system-ca-bundle",
+		"*.sublime-package"
 	],
 
 	// Files to include, as long they do not match a pattern in files_to_ignore
 	"include_files": [
-		"*.sublime-build",
-		"*.sublime-commands",
-		"*.sublime-completions",
-		"*.sublime-keymap",
-		"*.sublime-mousemap",
-		"*.sublime-menu",
-		"*.sublime-settings",
-		"*.sublime-snippet",
-		"*.sublime-macro",
+		"*.sublime-*",
 		"*.tmLanguage",
 		"*.tmTheme",
+		"*.tmPreferences",
 		"*.json",
+		"*.png",
+		"*.txt",
 		"*.py",
-		"*.md",
-		"*.txt"
+		"*.md"
 	],
 
 	// Directories to ignore when syncing
