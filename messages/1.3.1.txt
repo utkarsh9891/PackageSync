@@ -1,0 +1,15 @@
+=============
+Release 1.3.1
+=============
+
+Bug Fixes:
+- PackageSync was getting removed upon restoring to fresh machine:
+    Fix: PackageSync would always be a part of the sync operation.
+
+- Restore from folder always user default path of user desktop:
+    Fix: Now default path is used if prompt is off & path provided
+    in settings is false.
+
+- User settings for PackageSync were getting removed upon restore:
+    Fix: PackageSync now ensures that the user settings for itself
+    are maintained across sync operations.

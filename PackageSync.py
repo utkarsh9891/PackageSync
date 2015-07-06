@@ -48,8 +48,21 @@ def init_paths():
         desktop_path, "SublimePackagesBackup.zip")
 
 
+def add_packagesync_to_installed_packages():
+    package_control_settings = sublime.load_settings(
+        "Package Control.sublime-settings")
+    installed_packages = package_control_settings.get("installed_packages", [])
+    if "PackageSync" not in installed_packages:
+        installed_packages.append("PackageSync")
+    package_control_settings.set("installed_packages", installed_packages)
+    sublime.save_settings("Package Control.sublime-settings")
+
+
 def install_new_packages():
     try:
+        # Add PackageSync to the installed packages list if it has been removed
+        add_packagesync_to_installed_packages()
+
         # Remove the last-run file in order to trigger the package installation
         pkg_control_last_run = os.path.join(
             sublime.packages_path(), "User", "Package Control.last-run")
@@ -71,6 +84,8 @@ def packagesync_cancelled():
 
 
 def create_temp_backup():
+    add_packagesync_to_installed_packages()
+
     temp_backup_folder = os.path.join(tempfile.gettempdir(), str(time.time()))
     shutil.copytree(user_settings_folder, temp_backup_folder)
 
@@ -153,6 +168,8 @@ def prompt_for_location():
 def backup_pkg_list(backup_path):
     if backup_path is not None:
         try:
+            add_packagesync_to_installed_packages()
+
             package_control_settings = sublime.load_settings(
                 "Package Control.sublime-settings")
             installed_packages = package_control_settings.get(
@@ -358,9 +375,26 @@ def restore_folder(backup_path):
         try:
             print(
                 "PackageSync: Restoring package list & user settings from %s" % backup_path)
+            # Backup PackageSync user settings before restore operation
+            packagesync_settings_backup = os.path.join(
+                tempfile.gettempdir(), str(time.time()))
+            packagesync_settings_original = os.path.join(
+                user_settings_folder, "PackageSync.sublime-settings")
+            # Verify that user setting are present before backing up
+            if os.path.exists(packagesync_settings_original):
+                shutil.copy2(
+                    packagesync_settings_original, packagesync_settings_backup)
+                print("PackageSync: PackageSync.sublime-settings backed up to %s" % packagesync_settings_backup)
+
+            # Delete existing user data & restore from backup
             shutil.rmtree(user_settings_folder)
-            shutil.copytree(
-                default_folder_backup_path, user_settings_folder)
+            shutil.copytree(backup_path, user_settings_folder)
+
+            # Restore PackageSync user settings if they were backed up
+            if os.path.exists(packagesync_settings_backup) and not os.path.exists(packagesync_settings_original):
+                shutil.copy2(
+                    packagesync_settings_backup, packagesync_settings_original)
+                print("PackageSync: PackageSync.sublime-settings restored from %s" % packagesync_settings_backup)
 
             install_new_packages()
 
@@ -489,10 +523,27 @@ def restore_zip(backup_path):
         try:
             print(
                 "PackageSync: Restoring package list & user settings from %s" % backup_path)
+            # Backup PackageSync user settings before restore operation
+            packagesync_settings_backup = os.path.join(
+                tempfile.gettempdir(), str(time.time()))
+            packagesync_settings_original = os.path.join(
+                user_settings_folder, "PackageSync.sublime-settings")
+            # Verify that user setting are present before backing up
+            if os.path.exists(packagesync_settings_original):
+                shutil.copy2(
+                    packagesync_settings_original, packagesync_settings_backup)
+                print("PackageSync: PackageSync.sublime-settings backed up to %s" % packagesync_settings_backup)
 
+            # Delete existing user data & restore from backup
             shutil.rmtree(user_settings_folder)
             with zipfile.ZipFile(backup_path, "r") as z:
                 z.extractall(user_settings_folder)
+
+            # Restore PackageSync user settings if they were backed up
+            if os.path.exists(packagesync_settings_backup) and not os.path.exists(packagesync_settings_original):
+                shutil.copy2(
+                    packagesync_settings_backup, packagesync_settings_original)
+                print("PackageSync: PackageSync.sublime-settings restored from %s" % packagesync_settings_backup)
 
             install_new_packages()
 

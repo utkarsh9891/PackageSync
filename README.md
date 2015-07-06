@@ -28,7 +28,9 @@ This package currently supports the following functionalities:
   + __Backup__ - Backs up only the installed packages list to a file. All user settings are ignored in this option.
   + __Restore__ - Restores only the installed packages list from a file. User settings are ignored in this option.
 
-> *The user-setting file for PackageSync (PackageSync.sublime-settings) is never synced.*
+> *The user-setting file for PackageSync (PackageSync.sublime-settings) is never synced.*  
+
+__Note: Please ensure that all `*.sublime-settings` files are closed before any restore operation is performed. Files in open state would interrupt the restore operation, resulting in unforseen errors.__
 
 ## Usage
 
