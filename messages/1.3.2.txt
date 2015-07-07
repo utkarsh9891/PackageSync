@@ -1,0 +1,15 @@
+=============
+Release 1.3.2
+=============
+
+Bug Fixes:
+- Package Control.sublime-settings was not being restored:
+    Fix: The restore operation for this file would be performed in a delayed
+	manner in order to allow installation of missing/new packages.
+
+
+Feature to Come:
+The next release would be published soon. It would allow users to restore from
+existing backups without the worry of already present packages getting removed.
+This was currently a limitation of PackageSync that had not yet crossed my mind.
+

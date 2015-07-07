@@ -8,6 +8,7 @@ import shutil
 import zipfile
 import json
 import sys
+from threading import Timer
 
 
 def load_settings():
@@ -52,31 +53,39 @@ def add_packagesync_to_installed_packages():
     package_control_settings = sublime.load_settings(
         "Package Control.sublime-settings")
     installed_packages = package_control_settings.get("installed_packages", [])
+
     if "PackageSync" not in installed_packages:
+        print("PackageSync: Adding self to installed packages list")
         installed_packages.append("PackageSync")
+
     package_control_settings.set("installed_packages", installed_packages)
     sublime.save_settings("Package Control.sublime-settings")
 
 
 def install_new_packages():
     try:
-        # Add PackageSync to the installed packages list if it has been removed
-        add_packagesync_to_installed_packages()
+        def perform_cleanup():
+            # Add PackageSync to the installed packages list if it has been removed
+            add_packagesync_to_installed_packages()
 
-        # Remove the last-run file in order to trigger the package installation
-        pkg_control_last_run = os.path.join(
-            sublime.packages_path(), "User", "Package Control.last-run")
-        if os.path.isfile(pkg_control_last_run):
-            os.remove(pkg_control_last_run)
+            # Remove the last-run file in order to trigger the package installation
+            pkg_control_last_run = os.path.join(
+                sublime.packages_path(), "User", "Package Control.last-run")
+            if os.path.isfile(pkg_control_last_run):
+                os.remove(pkg_control_last_run)
 
-        # Import packageControlCleaner
-        pkg_control_cleanup = sys.modules[
-            "Package Control.package_control.package_cleanup"]
-        pkg_control_cleanup.PackageCleanup().start()
+            # Import package control cleanup
+            pkg_control_cleanup = sys.modules[
+                "Package Control.package_control.package_cleanup"]
+            pkg_control_cleanup.PackageCleanup().start()
+
+        t = Timer(3, perform_cleanup)
+        t.start()
+
     except Exception as e:
         print(
             "PackageSync: Error while installing packages via Package Control.")
-        raise e
+        print("PackageSync: Error message: %s" % str(e))
 
 
 def packagesync_cancelled():
@@ -189,7 +198,7 @@ def backup_pkg_list(backup_path):
         except Exception as e:
             print(
                 "PackageSync: Error while backing up installed packages list")
-            raise e
+            print("PackageSync: Error message: %s" % str(e))
     else:
         packagesync_cancelled()
 
@@ -225,7 +234,7 @@ class BackupInstalledPackagesListCommand(sublime_plugin.WindowCommand):
                     backup_path = None
             except Exception as e:
                 print("PackageSync: Error while fetching backup path.")
-                raise e
+                print("PackageSync: Error message: %s" % str(e))
 
             backup_pkg_list(backup_path)
         else:
@@ -260,7 +269,7 @@ def restore_pkg_list(backup_path):
         except Exception as e:
             print(
                 "PackageSync: Error while restoring packages from package list")
-            raise e
+            print("PackageSync: Error message: %s" % str(e))
     else:
         packagesync_cancelled()
 
@@ -290,7 +299,7 @@ class RestoreInstalledPackagesListCommand(sublime_plugin.WindowCommand):
                     backup_path = None
             except Exception as e:
                 print("PackageSync: Error while fetching backup path.")
-                raise e
+                print("PackageSync: Error message: %s" % str(e))
 
             restore_pkg_list(backup_path)
         else:
@@ -319,7 +328,7 @@ def backup_folder(backup_path):
                   backup_path)
         except Exception as e:
             print("PackageSync: Error while backing up packages to folder")
-            raise e
+            print("PackageSync: Error message: %s" % str(e))
     else:
         packagesync_cancelled()
 
@@ -353,7 +362,7 @@ class BackupPackagesToFolderCommand(sublime_plugin.WindowCommand):
                     backup_path = None
             except Exception as e:
                 print("PackageSync: Error while fetching backup path.")
-                raise e
+                print("PackageSync: Error message: %s" % str(e))
 
             backup_folder(backup_path)
         else:
@@ -384,7 +393,8 @@ def restore_folder(backup_path):
             if os.path.exists(packagesync_settings_original):
                 shutil.copy2(
                     packagesync_settings_original, packagesync_settings_backup)
-                print("PackageSync: PackageSync.sublime-settings backed up to %s" % packagesync_settings_backup)
+                print("PackageSync: PackageSync.sublime-settings backed up to %s" %
+                      packagesync_settings_backup)
 
             # Delete existing user data & restore from backup
             shutil.rmtree(user_settings_folder)
@@ -394,14 +404,15 @@ def restore_folder(backup_path):
             if os.path.exists(packagesync_settings_backup) and not os.path.exists(packagesync_settings_original):
                 shutil.copy2(
                     packagesync_settings_backup, packagesync_settings_original)
-                print("PackageSync: PackageSync.sublime-settings restored from %s" % packagesync_settings_backup)
+                print("PackageSync: PackageSync.sublime-settings restored from %s" %
+                      packagesync_settings_backup)
 
             install_new_packages()
 
         except Exception as e:
             print(
                 "PackageSync: Error while restoring packages from folder")
-            raise e
+            print("PackageSync: Error message: %s" % str(e))
     else:
         packagesync_cancelled()
 
@@ -430,7 +441,7 @@ class RestorePackagesFromFolderCommand(sublime_plugin.WindowCommand):
                     backup_path = None
             except Exception as e:
                 print("PackageSync: Error while fetching backup path.")
-                raise e
+                print("PackageSync: Error message: %s" % str(e))
 
             restore_folder(backup_path)
         else:
@@ -466,7 +477,7 @@ def backup_zip(backup_path):
                   backup_path)
         except Exception as e:
             print("PackageSync: Error while backing up packages to zip file")
-            raise e
+            print("PackageSync: Error message: %s" % str(e))
     else:
         packagesync_cancelled()
 
@@ -501,7 +512,7 @@ class BackupPackagesToZipCommand(sublime_plugin.WindowCommand):
                     backup_path = None
             except Exception as e:
                 print("PackageSync: Error while fetching backup path.")
-                raise e
+                print("PackageSync: Error message: %s" % str(e))
 
             backup_zip(backup_path)
         else:
@@ -532,7 +543,8 @@ def restore_zip(backup_path):
             if os.path.exists(packagesync_settings_original):
                 shutil.copy2(
                     packagesync_settings_original, packagesync_settings_backup)
-                print("PackageSync: PackageSync.sublime-settings backed up to %s" % packagesync_settings_backup)
+                print("PackageSync: PackageSync.sublime-settings backed up to %s" %
+                      packagesync_settings_backup)
 
             # Delete existing user data & restore from backup
             shutil.rmtree(user_settings_folder)
@@ -543,14 +555,15 @@ def restore_zip(backup_path):
             if os.path.exists(packagesync_settings_backup) and not os.path.exists(packagesync_settings_original):
                 shutil.copy2(
                     packagesync_settings_backup, packagesync_settings_original)
-                print("PackageSync: PackageSync.sublime-settings restored from %s" % packagesync_settings_backup)
+                print("PackageSync: PackageSync.sublime-settings restored from %s" %
+                      packagesync_settings_backup)
 
             install_new_packages()
 
         except Exception as e:
             print(
                 "PackageSync: Error while restoring packages from zip file")
-            raise e
+            print("PackageSync: Error message: %s" % str(e))
     else:
         packagesync_cancelled()
 
@@ -579,7 +592,7 @@ class RestorePackagesFromZipCommand(sublime_plugin.WindowCommand):
                     backup_path = None
             except Exception as e:
                 print("PackageSync: Error while fetching backup path.")
-                raise e
+                print("PackageSync: Error message: %s" % str(e))
 
             restore_zip(backup_path)
         else:
