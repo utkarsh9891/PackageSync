@@ -41,5 +41,11 @@
 	"ignore_dirs": [
 		"Package Control.cache",
 		"Package Control.ca-cert"
-	]
+	],
+
+	// Decides if the existing packages are to be preserved while restoring from a backup
+	// If set as false, existing packages & their settings are removed while restoring from a backup.
+	// If set as true, PackageSync keeps the existing packages intact. However, their settings are 
+	// overwritten if the backup contains user-settings for the same package.
+	"preserve_packages": true
 }

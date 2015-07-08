@@ -1,0 +1,7 @@
+=============
+Release 1.4.0
+=============
+
+PackageSync now allows user to determine if they want to preserve or overrite
+the existing packages during restore operation. This is controlled via the
+setting "preserve_packages"

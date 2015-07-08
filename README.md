@@ -96,6 +96,11 @@ By default, all directories created by other packages are included. Only the dir
 > Do note that an "include_dirs" option has not been provided on purpose.  
 > This has been done in order to avoid confusion for the user when syncing across OSX, WIN & LINUX mahcines as path would be different across all machines of the same user.
 
+#### preserve_packages *[boolean, true by default]*
+Decides if the existing packages are to be preserved while restoring from a backup.  
+If set as false, existing packages & their settings are removed during restore operation. Only the packages included in the backup are restored.  
+If set as true, PackageSync keeps the existing packages intact. Packages not included in the backup therefore remain unharmed even after restore operation. However, user-settings are overwritten if the backup contains user-settings for the same package.
+
 ## Installation
 
 #### Package Control
