@@ -11,7 +11,7 @@
 	// The path to use for backing up or restoring package list & user settings using a zip file
 	"zip_backup_path": "",
 	
-    // The folder path to use for backing up or restoring package list & user settings.
+	// The folder path to use for backing up or restoring package list & user settings.
 	"folder_backup_path": "",
 
 	// List of files to ignore when syncing
