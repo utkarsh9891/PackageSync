@@ -1,3 +1,6 @@
 ## Sublime Text Project Files
 *.sublime-project
 *.sublime-workspace
+
+## Compiled Python files
+*.pyc

@@ -17,7 +17,7 @@ except ValueError:
     from package_sync_helpers import offline
 
 
-class BackupInstalledPackagesListCommand(sublime_plugin.WindowCommand):
+class PsyncBackupListCommand(sublime_plugin.WindowCommand):
 
     def run(self):
         """ Backup the sublime-settings file for Package Control.
@@ -89,7 +89,7 @@ class BackupInstalledPackagesListCommand(sublime_plugin.WindowCommand):
             offline.packagesync_cancelled()
 
 
-class RestoreInstalledPackagesListCommand(sublime_plugin.WindowCommand):
+class PsyncRestoreListCommand(sublime_plugin.WindowCommand):
 
     def run(self):
         """ Restore the sublime-settings file for Package Control.
@@ -152,7 +152,7 @@ class RestoreInstalledPackagesListCommand(sublime_plugin.WindowCommand):
             offline.packagesync_cancelled()
 
 
-class BackupPackagesToFolderCommand(sublime_plugin.WindowCommand):
+class PsyncBackupFolderCommand(sublime_plugin.WindowCommand):
 
     def run(self):
         """ Backup the "/Packages/User" folder to the backup location.
@@ -213,7 +213,7 @@ class BackupPackagesToFolderCommand(sublime_plugin.WindowCommand):
             offline.packagesync_cancelled()
 
 
-class RestorePackagesFromFolderCommand(sublime_plugin.WindowCommand):
+class PsyncRestoreFolderCommand(sublime_plugin.WindowCommand):
 
     def run(self):
         """ Restore the "/Packages/User" folder from the backup location.
@@ -292,7 +292,7 @@ class RestorePackagesFromFolderCommand(sublime_plugin.WindowCommand):
             offline.packagesync_cancelled()
 
 
-class BackupPackagesToZipCommand(sublime_plugin.WindowCommand):
+class PsyncBackupZipCommand(sublime_plugin.WindowCommand):
 
     def run(self):
         """ Backup the "/Packages/User" folder to the backup location.
@@ -362,7 +362,7 @@ class BackupPackagesToZipCommand(sublime_plugin.WindowCommand):
             offline.packagesync_cancelled()
 
 
-class RestorePackagesFromZipCommand(sublime_plugin.WindowCommand):
+class PsyncRestoreZipCommand(sublime_plugin.WindowCommand):
 
     def run(self):
         """ Restore the "/Packages/User" folder from the backup location.
