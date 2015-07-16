@@ -27,14 +27,16 @@ class PsyncBackupListCommand(sublime_plugin.WindowCommand):
 
         tools.load_settings()
 
-        if tools.sync_settings["prompt_for_location"] is False:
+        if tools.sync_settings["prompt_for_location"] == False:
             list_backup_path = tools.sync_settings["list_backup_path"]
 
+            backup_path = None
             try:
-                if list_backup_path is "":
+                if list_backup_path == "":
                     backup_path = tools.default_list_backup_path
                 elif os.path.exists(list_backup_path):
-                    if sublime.ok_cancel_dialog("Backup already exists @ %s \nOverride it?" % list_backup_path) is True:
+                    if sublime.ok_cancel_dialog(
+                            "Backup already exists @ %s \nReplace it?" % list_backup_path) == True:
                         os.remove(list_backup_path)
                         backup_path = list_backup_path
                     else:
@@ -63,7 +65,7 @@ class PsyncBackupListCommand(sublime_plugin.WindowCommand):
             offline.prompt_for_location()
 
     def backup_pkg_list(self, backup_path):
-        if backup_path is not None:
+        if backup_path != None:
             try:
                 package_control_settings = sublime.load_settings(
                     "Package Control.sublime-settings")
@@ -99,11 +101,12 @@ class PsyncRestoreListCommand(sublime_plugin.WindowCommand):
 
         tools.load_settings()
 
-        if tools.sync_settings["prompt_for_location"] is False:
+        if tools.sync_settings["prompt_for_location"] == False:
             list_backup_path = tools.sync_settings["list_backup_path"]
 
+            backup_path = None
             try:
-                if list_backup_path is "":
+                if list_backup_path == "":
                     backup_path = tools.default_list_backup_path
                 elif os.path.isfile(list_backup_path):
                     backup_path = list_backup_path
@@ -129,7 +132,7 @@ class PsyncRestoreListCommand(sublime_plugin.WindowCommand):
             offline.prompt_for_location()
 
     def restore_pkg_list(self, backup_path):
-        if backup_path is not None:
+        if backup_path != None:
             try:
                 print("PackageSync: Restoring package list from %s" %
                       backup_path)
@@ -161,14 +164,16 @@ class PsyncBackupFolderCommand(sublime_plugin.WindowCommand):
 
         tools.load_settings()
 
-        if tools.sync_settings["prompt_for_location"] is False:
+        if tools.sync_settings["prompt_for_location"] == False:
             folder_backup_path = tools.sync_settings["folder_backup_path"]
 
+            backup_path = None
             try:
-                if folder_backup_path is "":
+                if folder_backup_path == "":
                     backup_path = tools.default_folder_backup_path
                 elif os.path.exists(folder_backup_path) and len(os.listdir(folder_backup_path)) > 0:
-                    if sublime.ok_cancel_dialog("Backup already exists @ %s \nOverride it?" % folder_backup_path) is True:
+                    if sublime.ok_cancel_dialog(
+                        "Backup already exists @ %s \nReplace it?" % folder_backup_path) == True:
                         backup_path = folder_backup_path
                     else:
                         backup_path = None
@@ -196,7 +201,7 @@ class PsyncBackupFolderCommand(sublime_plugin.WindowCommand):
             offline.prompt_for_location()
 
     def backup_folder(self, backup_path):
-        if backup_path is not None:
+        if backup_path != None:
             try:
                 offline.create_temp_backup()
 
@@ -218,15 +223,16 @@ class PsyncRestoreFolderCommand(sublime_plugin.WindowCommand):
     def run(self):
         """ Restore the "/Packages/User" folder from the backup location.
         This restores the sublime-settings file created by user settings.
-        Package Control settings file is also inherently restored. """
+        Package Control settings file == also inherently restored. """
 
         tools.load_settings()
 
-        if tools.sync_settings["prompt_for_location"] is False:
+        if tools.sync_settings["prompt_for_location"] == False:
             folder_backup_path = tools.sync_settings["folder_backup_path"]
 
+            backup_path = None
             try:
-                if folder_backup_path is "":
+                if folder_backup_path == "":
                     backup_path = tools.default_folder_backup_path
                 elif os.path.isdir(folder_backup_path):
                     backup_path = folder_backup_path
@@ -252,7 +258,7 @@ class PsyncRestoreFolderCommand(sublime_plugin.WindowCommand):
             offline.prompt_for_location()
 
     def restore_folder(self, backup_path):
-        if backup_path is not None:
+        if backup_path != None:
             try:
                 print(
                     "PackageSync: Restoring package list & user settings from %s" % backup_path)
@@ -301,14 +307,16 @@ class PsyncBackupZipCommand(sublime_plugin.WindowCommand):
 
         tools.load_settings()
 
-        if tools.sync_settings["prompt_for_location"] is False:
+        if tools.sync_settings["prompt_for_location"] == False:
             zip_backup_path = tools.sync_settings["zip_backup_path"]
 
+            backup_path = None
             try:
-                if zip_backup_path is "":
+                if zip_backup_path == "":
                     backup_path = tools.default_zip_backup_path
                 elif os.path.exists(zip_backup_path):
-                    if sublime.ok_cancel_dialog("Backup already exists @ %s \nOverride it?" % zip_backup_path) is True:
+                    if sublime.ok_cancel_dialog(
+                        "Backup already exists @ %s \nReplace it?" % zip_backup_path) == True:
                         os.remove(zip_backup_path)
                         backup_path = zip_backup_path
                     else:
@@ -337,20 +345,33 @@ class PsyncBackupZipCommand(sublime_plugin.WindowCommand):
             offline.prompt_for_location()
 
     def backup_zip(self, backup_path):
-        if backup_path is not None:
+        if backup_path != None:
             try:
                 offline.create_temp_backup()
 
                 temp_zip_file_path = os.path.join(
-                    tempfile.gettempdir(), str(time.time()))
-                shutil.make_archive(
-                    temp_zip_file_path, "zip", tools.temp_backup_folder)
+                    tempfile.gettempdir(), str(time.time())) + ".zip"
+
+                # create temp backup zip from the temp backup
+                z = zipfile.ZipFile(temp_zip_file_path, 'w')
+                basePath = tools.temp_backup_folder.rstrip("\\/") + ""
+                basePath = basePath.rstrip("\\/")
+
+                for root, dirs, files in os.walk(tools.temp_backup_folder):
+                    for item in (files + dirs):
+                        itemPath = os.path.join(root, item)
+                        inZipPath = itemPath.replace(
+                            basePath, "", 1).lstrip("\\/")
+                        z.write(itemPath, inZipPath)
+
+                # close the temp backup file
+                z.close()
 
                 if os.path.isfile(backup_path):
                     os.remove(backup_path)
                 elif not os.path.exists(os.path.dirname(backup_path)):
                     os.makedirs(os.path.dirname(backup_path))
-                shutil.move(temp_zip_file_path + ".zip", backup_path)
+                shutil.move(temp_zip_file_path, backup_path)
 
                 print("PackageSync: Zip backup of packages & settings created at %s" %
                       backup_path)
@@ -371,11 +392,12 @@ class PsyncRestoreZipCommand(sublime_plugin.WindowCommand):
 
         tools.load_settings()
 
-        if tools.sync_settings["prompt_for_location"] is False:
+        if tools.sync_settings["prompt_for_location"] == False:
             zip_backup_path = tools.sync_settings["zip_backup_path"]
 
+            backup_path = None
             try:
-                if zip_backup_path is "":
+                if zip_backup_path == "":
                     backup_path = tools.default_zip_backup_path
                 elif os.path.isfile(zip_backup_path):
                     backup_path = zip_backup_path
@@ -401,7 +423,7 @@ class PsyncRestoreZipCommand(sublime_plugin.WindowCommand):
             offline.prompt_for_location()
 
     def restore_zip(self, backup_path):
-        if backup_path is not None:
+        if backup_path != None:
             try:
                 print(
                     "PackageSync: Restoring package list & user settings from %s" % backup_path)
@@ -419,10 +441,16 @@ class PsyncRestoreZipCommand(sublime_plugin.WindowCommand):
 
                 if os.path.exists(tools.temp_restore_folder):
                     shutil.rmtree(tools.temp_restore_folder, True)
+                
                 # Extract to temp restore folder & then perform restore operation
                 # as per the preserve setting
-                with zipfile.ZipFile(backup_path, "r") as z:
-                    z.extractall(tools.temp_restore_folder)
+                # 
+                # Sublime 2 has Python 2.6.9 as interpreter. So using with zipfile.ZipFile would not work
+                # Therefore explicitly open & close the zip file for operation
+                z = zipfile.ZipFile(backup_path, "r")
+                z.extractall(tools.temp_restore_folder)
+                z.close()
+
                 offline.restore_from_temp()
 
                 # Restore PackageSync user settings if they were backed up

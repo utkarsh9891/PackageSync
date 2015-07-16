@@ -12,6 +12,7 @@ except ValueError:
 
 prompt_parameters = {}
 
+
 def packagesync_cancelled():
     print("PackageSync: Backup/Restore operation cancelled")
 
@@ -48,7 +49,7 @@ def create_temp_backup():
 
 def restore_from_temp():
     try:
-        if tools.sync_settings["preserve_packages"] is False:
+        if tools.sync_settings["preserve_packages"] == False:
             # Delete all existing user settings & restore from temp backup
             shutil.rmtree(tools.user_settings_folder, True)
             shutil.copytree(
@@ -98,21 +99,28 @@ def restore_from_temp():
 def backup_with_prompt_on_done(path):
     global prompt_parameters
 
-    if os.path.exists(path) is True:
-        confirm_override = sublime.yes_no_cancel_dialog(
-            "Backup already exists @ %s \nOverride it?" % path)
+    if os.path.exists(path) == True:
 
-        if confirm_override is sublime.DIALOG_YES:
-            prompt_parameters["operation_to_perform"](path)
-
-        elif confirm_override is sublime.DIALOG_NO:
-            prompt_parameters["initial_text"] = path
-            prompt_for_location()
-
+        if sublime.version()[0] == "2":
+            if sublime.ok_cancel_dialog(
+                "Backup already exists @ %s \nReplace it?" % path) == True:
+                prompt_parameters["operation_to_perform"](path)
+            
+            else:
+                packagesync_cancelled()
         else:
-            prompt_parameters["operation_to_perform"](None)
+            confirm_override = sublime.yes_no_cancel_dialog(
+                "Backup already exists @ %s \nReplace it?" % path)
 
-    elif os.path.isabs(os.path.dirname(path)) is True:
+            if confirm_override == sublime.DIALOG_YES:
+                prompt_parameters["operation_to_perform"](path)
+            elif sublime.version()[0] == "3" and confirm_override == sublime.DIALOG_NO:
+                prompt_parameters["initial_text"] = path
+                prompt_for_location()
+            else:
+                packagesync_cancelled()
+
+    elif os.path.isabs(os.path.dirname(path)) == True:
         prompt_parameters["operation_to_perform"](path)
 
     else:
@@ -124,11 +132,11 @@ def backup_with_prompt_on_done(path):
 def restore_with_prompt_on_done(path):
     global prompt_parameters
 
-    if os.path.exists(path) is True:
-        if prompt_parameters["type"] is "file" and os.path.isfile(path) is True:
+    if os.path.exists(path) == True:
+        if prompt_parameters["type"] == "file" and os.path.isfile(path) == True:
             prompt_parameters["operation_to_perform"](path)
 
-        elif prompt_parameters["type"] is "folder" and os.path.isdir(path) is True:
+        elif prompt_parameters["type"] == "folder" and os.path.isdir(path) == True:
             prompt_parameters["operation_to_perform"](path)
 
         else:
@@ -143,9 +151,9 @@ def restore_with_prompt_on_done(path):
 
 
 def prompt_for_location():
-    if prompt_parameters["mode"] is "backup":
+    if prompt_parameters["mode"] == "backup":
         prompt_parameters["window_context"].show_input_panel("Backup Path", prompt_parameters[
                                                              "initial_text"], backup_with_prompt_on_done, None, packagesync_cancelled)
-    elif prompt_parameters["mode"] is "restore":
+    elif prompt_parameters["mode"] == "restore":
         prompt_parameters["window_context"].show_input_panel("Backup Path", prompt_parameters[
                                                              "initial_text"], restore_with_prompt_on_done, None, packagesync_cancelled)

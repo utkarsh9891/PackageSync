@@ -6,8 +6,6 @@ import sys
 import tempfile
 import time
 
-from threading import Timer
-
 
 def load_settings():
     s = sublime.load_settings("PackageSync.sublime-settings")
@@ -58,6 +56,10 @@ def plugin_loaded():
         tempfile.gettempdir(), "restore_" + str(time.time()))
 
 
+if sublime.version()[0] == "2":
+    plugin_loaded()
+
+
 def add_packagesync_to_installed_packages():
     package_control_settings = sublime.load_settings(
         "Package Control.sublime-settings")
@@ -82,8 +84,8 @@ def install_new_packages():
                 os.remove(pkg_control_last_run)
 
             # Import package control cleanup
-            pkg_control_cleanup = sys.modules[
-                "Package Control.package_control.package_cleanup"]
+            pkg_control_cleanup = sys.modules["Package Control.package_control.package_cleanup"] if sublime.version(
+            )[0] == "3" else sys.modules["package_control.package_cleanup"]
             pkg_control_cleanup.PackageCleanup().start()
 
         # TODO: Verify whether this function call is actually needed. Added as
@@ -91,14 +93,9 @@ def install_new_packages():
         # Add PackageSync to the installed packages list if it has been removed
         add_packagesync_to_installed_packages()
 
-        t = Timer(3, run_package_control_cleanup)
-        t.start()
+        sublime.set_timeout(run_package_control_cleanup, 2000)
 
     except Exception as e:
         print(
             "PackageSync: Error while installing packages via Package Control.")
         print("PackageSync: Error message: %s" % str(e))
-
-
-if sublime.version()[0] == "3":
-    plugin_loaded()
