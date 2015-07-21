@@ -19,7 +19,7 @@ def load_settings():
         "ignore_files": s.get("ignore_files", []) + ["PackageSync.sublime-settings"],
         "include_files": s.get("include_files", []),
         "ignore_dirs": s.get("ignore_dirs", []),
-        "preserve_packages": s.get("preserve_packages", True)
+        "preserve_packages": s.get("preserve_packages", True),
     }
 
 

@@ -19,12 +19,12 @@ except ValueError:
 
 class PsyncBackupListCommand(sublime_plugin.WindowCommand):
 
-    def run(self):
-        """ Backup the sublime-settings file for Package Control.
-        This file contains the list of installed packages.
-        The backup is stored on the backup location with the name specified in the
-        config file. """
+    """ Backup the sublime-settings file for Package Control.
+    This file contains the list of installed packages.
+    The backup is stored on the backup location with the name specified in the
+    config file. """
 
+    def run(self):
         tools.load_settings()
 
         if tools.sync_settings["prompt_for_location"] == False:
@@ -93,12 +93,12 @@ class PsyncBackupListCommand(sublime_plugin.WindowCommand):
 
 class PsyncRestoreListCommand(sublime_plugin.WindowCommand):
 
-    def run(self):
-        """ Restore the sublime-settings file for Package Control.
-        This file contains the list of installed packages.
-        The backup file should be stored on the backup location with the name
-        specified in the config file. """
+    """ Restore the sublime-settings file for Package Control.
+    This file contains the list of installed packages.
+    The backup file should be stored on the backup location with the name
+    specified in the config file. """
 
+    def run(self):
         tools.load_settings()
 
         if tools.sync_settings["prompt_for_location"] == False:
@@ -157,11 +157,11 @@ class PsyncRestoreListCommand(sublime_plugin.WindowCommand):
 
 class PsyncBackupFolderCommand(sublime_plugin.WindowCommand):
 
-    def run(self):
-        """ Backup the "/Packages/User" folder to the backup location.
-        This backs up the sublime-settings file created by user settings.
-        Package Control settings file is also inherently backed up. """
+    """ Backup the "/Packages/User" folder to the backup location.
+    This backs up the sublime-settings file created by user settings.
+    Package Control settings file is also inherently backed up. """
 
+    def run(self):
         tools.load_settings()
 
         if tools.sync_settings["prompt_for_location"] == False:
@@ -173,7 +173,7 @@ class PsyncBackupFolderCommand(sublime_plugin.WindowCommand):
                     backup_path = tools.default_folder_backup_path
                 elif os.path.exists(folder_backup_path) and len(os.listdir(folder_backup_path)) > 0:
                     if sublime.ok_cancel_dialog(
-                        "Backup already exists @ %s \nReplace it?" % folder_backup_path) == True:
+                            "Backup already exists @ %s \nReplace it?" % folder_backup_path) == True:
                         backup_path = folder_backup_path
                     else:
                         backup_path = None
@@ -220,11 +220,11 @@ class PsyncBackupFolderCommand(sublime_plugin.WindowCommand):
 
 class PsyncRestoreFolderCommand(sublime_plugin.WindowCommand):
 
-    def run(self):
-        """ Restore the "/Packages/User" folder from the backup location.
-        This restores the sublime-settings file created by user settings.
-        Package Control settings file == also inherently restored. """
+    """ Restore the "/Packages/User" folder from the backup location.
+    This restores the sublime-settings file created by user settings.
+    Package Control settings file is also inherently restored. """
 
+    def run(self):
         tools.load_settings()
 
         if tools.sync_settings["prompt_for_location"] == False:
@@ -300,11 +300,11 @@ class PsyncRestoreFolderCommand(sublime_plugin.WindowCommand):
 
 class PsyncBackupZipCommand(sublime_plugin.WindowCommand):
 
-    def run(self):
-        """ Backup the "/Packages/User" folder to the backup location.
-        This backs up the sublime-settings file created by user settings.
-        Package Control settings file is also inherently backed up. """
+    """ Backup the "/Packages/User" folder to the backup location.
+    This backs up the sublime-settings file created by user settings.
+    Package Control settings file is also inherently backed up. """
 
+    def run(self):
         tools.load_settings()
 
         if tools.sync_settings["prompt_for_location"] == False:
@@ -316,7 +316,7 @@ class PsyncBackupZipCommand(sublime_plugin.WindowCommand):
                     backup_path = tools.default_zip_backup_path
                 elif os.path.exists(zip_backup_path):
                     if sublime.ok_cancel_dialog(
-                        "Backup already exists @ %s \nReplace it?" % zip_backup_path) == True:
+                            "Backup already exists @ %s \nReplace it?" % zip_backup_path) == True:
                         os.remove(zip_backup_path)
                         backup_path = zip_backup_path
                     else:
@@ -385,11 +385,11 @@ class PsyncBackupZipCommand(sublime_plugin.WindowCommand):
 
 class PsyncRestoreZipCommand(sublime_plugin.WindowCommand):
 
-    def run(self):
-        """ Restore the "/Packages/User" folder from the backup location.
-        This restores the sublime-settings file created by user settings.
-        Package Control settings file is also inherently restored. """
+    """ Restore the "/Packages/User" folder from the backup location.
+    This restores the sublime-settings file created by user settings.
+    Package Control settings file is also inherently restored. """
 
+    def run(self):
         tools.load_settings()
 
         if tools.sync_settings["prompt_for_location"] == False:
@@ -441,10 +441,10 @@ class PsyncRestoreZipCommand(sublime_plugin.WindowCommand):
 
                 if os.path.exists(tools.temp_restore_folder):
                     shutil.rmtree(tools.temp_restore_folder, True)
-                
+
                 # Extract to temp restore folder & then perform restore operation
                 # as per the preserve setting
-                # 
+                #
                 # Sublime 2 has Python 2.6.9 as interpreter. So using with zipfile.ZipFile would not work
                 # Therefore explicitly open & close the zip file for operation
                 z = zipfile.ZipFile(backup_path, "r")
@@ -468,3 +468,4 @@ class PsyncRestoreZipCommand(sublime_plugin.WindowCommand):
                 print("PackageSync: Error message: %s" % str(e))
         else:
             offline.packagesync_cancelled()
+

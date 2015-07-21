@@ -9,27 +9,27 @@
         "id": "packageBackup",
         "children": [
           {
-            "caption": "Backup Packages To Zip (Recommended)",
+            "caption": "Local - Backup Packages To Zip (Recommended)",
             "command": "psync_backup_zip"
           },
           {
-            "caption": "Restore Packages From Zip (Recommended)",
+            "caption": "Local - Restore Packages From Zip (Recommended)",
             "command": "psync_restore_zip"
           },
           {
-            "caption": "Backup Packages To Folder",
+            "caption": "Local - Backup Packages To Folder",
             "command": "psync_backup_folder"
           },
           {
-            "caption": "Restore Packages From Folder",
+            "caption": "Local - Restore Packages From Folder",
             "command": "psync_restore_folder"
           },
           {
-            "caption": "Backup Installed Packages List Only",
+            "caption": "Local - Backup Installed Packages List Only",
             "command": "psync_backup_list"
           },
           {
-            "caption": "Restore Installed Packages List Only",
+            "caption": "Local - Restore Installed Packages List Only",
             "command": "psync_restore_list"
           }
         ]
