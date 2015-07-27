@@ -53,11 +53,11 @@
 	"online_sync_enabled": false,
 
 	// Folder to use for syncing the backup with online syncing services
-	// This should be the path to a folder inside the Google Drive or DropBox sync folder
+	// This should be the path to a folder inside the Google Drive, Dropbox or SkyDrive sync folder
 	// Any other online syncing application can be used as well
 	"online_sync_folder": "",
 
-	// The frequency (in seconds) at which PackageSync sohuld poll to see if there are any changes in the local folder
-	// of in the backup in the online sync folder
+	// The frequency (in seconds) at which PackageSync should poll to see if there are any changes in the local folder
+	// or in the online sync folder
 	"online_sync_interval": 5,
 }
