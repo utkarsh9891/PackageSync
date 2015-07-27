@@ -31,10 +31,10 @@ Also, while restoring from PackageSync backup, __please ensure that all `*.subli
 #### Sync Online
 This allows you to sync the packages & user settings in real time across different devices. For this, the installed packages list & user settings are be saved to & synced via a folder monitored by Dropbox, Google Drive or SkyDrive etc.  
 
-__First Machine__  
++ __First Machine__  
 Turn on PackageSync's online syncing module by setting the sync folder via "PackageSync: Sync Online - Define Online Sync Folder" from the command palette or Tools menu. In the ensuing input panel, give the complete path to any directory on your computer inside your Dropbox or Google Drive sync folder.  
 
-__Second Machine (or after a fresh installation)__  
++ __Second Machine (or after a fresh installation of Sublime Text)__  
 On your second machine please wait until all the backup files are available and then simply set the sync folder and PackageSync will automatically pull all available files from that folder. The following message dialog should appear which you just have to confirm.  
 
 ![OnlineSyncFolder](https://cloud.githubusercontent.com/assets/9902630/8914964/b20c58ae-34bf-11e5-86d3-b478afb161d3.png)
@@ -53,59 +53,58 @@ Alternatively, from inside Sublime Text, open Package Control's Command Pallet: 
 
 PackageSync provides the following user configurable settings:
 
-#### prompt_for_location *[boolean, true by default]*
++ __prompt_for_location *[boolean, true by default]*__  
 Decides if the user is asked for providing location to back up to or restore from.  
 If set as true, user is prompted every time for a path upon back up or restore operation.  
 If set as false, the location specified in settings is used. If no location has been specified in settings, by default user's desktop is used for backup.
 
-#### zip_backup_path *[string]*
++ __zip_backup_path *[string]*__  
 The zip file path to use for backing up or restoring package list & user settings.  
 > `"prompt_for_location" = false` & `"zip_backup_path" = ""`  
 > This combination backs up & restores using the zip file `SublimePackagesBackup.zip` on the current user's Desktop. During backup operation, it also overrides any existing backup at this location without confirmation.
 
-#### folder_backup_path *[string]*
++ __folder_backup_path *[string]*__  
 The folder path to use for backing up or restoring package list & user settings.  
 > `"prompt_for_location" = false` & `"folder_backup_path" = ""`  
 > This combination backs up & restores using the folder `SublimePackagesBackup` on the current user's Desktop. During backup operation, it also overrides any existing backup at this location without confirmation.
 
-#### list_backup_path *[string]*
++ __list_backup_path *[string]*__  
 The file path to use for backing up or restoring only the package list.  
 > `"prompt_for_location" = false` & `"list_backup_path" = ""`  
 > This combination backs up & restores using the file `SublimePackagesList.txt` on the current user's Desktop. During backup operation, it also overrides any existing backup at this location without confirmation.
 
-#### ignore_files *[array]*
++ __ignore_files *[array]*__  
 The list of files to ignore when backing up.  
 It supports wildcarded file names as well. Supported wildcard entries are '*', '?', '[seq]' & '[!seq]'. For further details, please see the [fnmatch documentation](https://docs.python.org/2/library/fnmatch.html).  
 > Files ignored by default are \*.DS_Store, \*.last-run, Package Control.ca-list, Package Control.ca-bundle, Package Control.system-ca-bundle & \*.sublime-package.
 
-#### include_files *[array]*
++ __include_files *[array]*__  
 The list of files to include when backing up.  
 Note: __*ignore_files holds higher priority as compared to include_files*__. So a file matching both the settings would essentially be ignored, as governed by ignore_files.  
 It supports wildcarded file names as well. Supported wildcard entries are '*', '?', '[seq]' & '[!seq]'. For further details, please see the [fnmatch documentation](https://docs.python.org/2/library/fnmatch.html).  
-
 > The user settings for PackageSync (PackageSync.sublime-settings) would __never__ be synced, even if added to this list.  
 > Files included by default are \*.sublime-\*, \*.tmLanguage, \*.tmTheme, \*.tmPreferences, \*.json, \*.png, \*.txt, \*.py, \*.md.
 
-#### ignore_dirs *[array]*
++ __ignore_dirs *[array]*__  
 Directories to ignore when backing up.  
 By default, all directories created by other packages are included. Only the directories specified in this list are ignored while syncing.  
 > Do note that an "include_dirs" option has not been provided on purpose.  
 > This has been done in order to avoid confusion for the user when syncing across OSX, WIN & LINUX mahcines as path would be different across all machines of the same user.
 
-#### preserve_packages *[boolean, true by default]*
++ __preserve_packages *[boolean, true by default]*__  
 Decides if the existing packages are to be preserved while restoring from a backup.  
 If set as false, existing packages & their settings are removed during restore operation. Only the packages included in the backup are restored.  
 If set as true, PackageSync keeps the existing packages intact. Packages not included in the backup therefore remain unharmed even after restore operation. However, user-settings are overwritten if the backup contains user-settings for the same package.
 
-#### online_sync_enabled *[boolean, false by default]*
++ __online_sync_enabled *[boolean, false by default]*__  
 Toggle to determine if online syncing is enabled or not.  
 Turning this toggle ON/OFF requires Online Sync Folder to be setup first.
 
-#### online_sync_folder *[string]*
++ __online_sync_folder *[string]*__  
 Folder to use for syncing the backup with online syncing services.  
 This should be the path to a folder inside the Google Drive, Dropbox or SkyDrive sync folder. Any other online syncing application can be used as well.
 
-#### online_sync_interval *[integer, default 1]*
++ __online_sync_interval *[integer, default 1]*__  
 The frequency (in seconds) at which PackageSync should poll to see if there are any changes in the local folder or in the online sync folder.  
 PackageSync will keep your settings up to date across machines by checking regularly at this interval. If you face any performance issues you can increase this time via the settings and a restart of Sublime Text.
 
@@ -136,7 +135,6 @@ The features listed above should now be available.
 
 Please use the form [PackageSync Feedback](http://goo.gl/forms/hM2eaHb0Ne) for providing any Feedback or Suggestions or for reporting Issues that you face while using or installing PackageSync.
 
-> Additionally, this package is currently in development phase & still requires additional features. The online syncing support is soon to be added.
 
 ## License
 
