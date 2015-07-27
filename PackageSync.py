@@ -11,24 +11,25 @@ import sys
 
 try:
     from .package_sync_helpers import tools
+    from .package_sync_helpers import online
     from .package_sync_helpers import offline
 except ValueError:
     from package_sync_helpers import tools
+    from package_sync_helpers import online
     from package_sync_helpers import offline
 
+sync_queue = online.Queue()
 
-class PsyncBackupListCommand(sublime_plugin.WindowCommand):
+class PsyncLocalBackupListCommand(sublime_plugin.WindowCommand):
 
-    """ Backup the sublime-settings file for Package Control.
-    This file contains the list of installed packages.
-    The backup is stored on the backup location with the name specified in the
-    config file. """
+    # def is_enabled(self):
+    #     return True
 
     def run(self):
-        tools.load_settings()
+        psync_settings = tools.get_psync_settings()
 
-        if tools.sync_settings["prompt_for_location"] == False:
-            list_backup_path = tools.sync_settings["list_backup_path"]
+        if psync_settings["prompt_for_location"] == False:
+            list_backup_path = psync_settings["list_backup_path"]
 
             backup_path = None
             try:
@@ -60,7 +61,7 @@ class PsyncBackupListCommand(sublime_plugin.WindowCommand):
                 "initial_text": tools.default_list_backup_path,
                 "operation_to_perform": self.backup_pkg_list,
                 "on_change": None,
-                "on_cancel": offline.packagesync_cancelled
+                "on_cancel": tools.packagesync_cancelled
             }
             offline.prompt_for_location()
 
@@ -79,7 +80,7 @@ class PsyncBackupListCommand(sublime_plugin.WindowCommand):
 
                 with open(backup_path, "w") as _backupFile:
                     json.dump(
-                        {"installed_packages": installed_packages}, _backupFile)
+                        {"installed_packages": installed_packages}, _backupFile, indent=4)
 
                 print("PackageSync: Backup of installed packages list created at %s" %
                       backup_path)
@@ -88,21 +89,19 @@ class PsyncBackupListCommand(sublime_plugin.WindowCommand):
                     "PackageSync: Error while backing up installed packages list")
                 print("PackageSync: Error message: %s" % str(e))
         else:
-            offline.packagesync_cancelled()
+            tools.packagesync_cancelled()
 
 
-class PsyncRestoreListCommand(sublime_plugin.WindowCommand):
+class PsyncLocalRestoreListCommand(sublime_plugin.WindowCommand):
 
-    """ Restore the sublime-settings file for Package Control.
-    This file contains the list of installed packages.
-    The backup file should be stored on the backup location with the name
-    specified in the config file. """
+    # def is_enabled(self):
+    #     return True
 
     def run(self):
-        tools.load_settings()
+        psync_settings = tools.get_psync_settings()
 
-        if tools.sync_settings["prompt_for_location"] == False:
-            list_backup_path = tools.sync_settings["list_backup_path"]
+        if psync_settings["prompt_for_location"] == False:
+            list_backup_path = psync_settings["list_backup_path"]
 
             backup_path = None
             try:
@@ -127,7 +126,7 @@ class PsyncRestoreListCommand(sublime_plugin.WindowCommand):
                 "initial_text": tools.default_list_backup_path,
                 "operation_to_perform": self.restore_pkg_list,
                 "on_change": None,
-                "on_cancel": offline.packagesync_cancelled
+                "on_cancel": tools.packagesync_cancelled
             }
             offline.prompt_for_location()
 
@@ -152,20 +151,19 @@ class PsyncRestoreListCommand(sublime_plugin.WindowCommand):
                     "PackageSync: Error while restoring packages from package list")
                 print("PackageSync: Error message: %s" % str(e))
         else:
-            offline.packagesync_cancelled()
+            tools.packagesync_cancelled()
 
 
-class PsyncBackupFolderCommand(sublime_plugin.WindowCommand):
+class PsyncLocalBackupFolderCommand(sublime_plugin.WindowCommand):
 
-    """ Backup the "/Packages/User" folder to the backup location.
-    This backs up the sublime-settings file created by user settings.
-    Package Control settings file is also inherently backed up. """
+    # def is_enabled(self):
+    #     return True
 
     def run(self):
-        tools.load_settings()
+        psync_settings = tools.get_psync_settings()
 
-        if tools.sync_settings["prompt_for_location"] == False:
-            folder_backup_path = tools.sync_settings["folder_backup_path"]
+        if psync_settings["prompt_for_location"] == False:
+            folder_backup_path = psync_settings["folder_backup_path"]
 
             backup_path = None
             try:
@@ -196,7 +194,7 @@ class PsyncBackupFolderCommand(sublime_plugin.WindowCommand):
                 "initial_text": tools.default_folder_backup_path,
                 "operation_to_perform": self.backup_folder,
                 "on_change": None,
-                "on_cancel": offline.packagesync_cancelled
+                "on_cancel": tools.packagesync_cancelled
             }
             offline.prompt_for_location()
 
@@ -215,20 +213,19 @@ class PsyncBackupFolderCommand(sublime_plugin.WindowCommand):
                 print("PackageSync: Error while backing up packages to folder")
                 print("PackageSync: Error message: %s" % str(e))
         else:
-            offline.packagesync_cancelled()
+            tools.packagesync_cancelled()
 
 
-class PsyncRestoreFolderCommand(sublime_plugin.WindowCommand):
+class PsyncLocalRestoreFolderCommand(sublime_plugin.WindowCommand):
 
-    """ Restore the "/Packages/User" folder from the backup location.
-    This restores the sublime-settings file created by user settings.
-    Package Control settings file is also inherently restored. """
+    # def is_enabled(self):
+    #     return True
 
     def run(self):
-        tools.load_settings()
+        psync_settings = tools.get_psync_settings()
 
-        if tools.sync_settings["prompt_for_location"] == False:
-            folder_backup_path = tools.sync_settings["folder_backup_path"]
+        if psync_settings["prompt_for_location"] == False:
+            folder_backup_path = psync_settings["folder_backup_path"]
 
             backup_path = None
             try:
@@ -253,7 +250,7 @@ class PsyncRestoreFolderCommand(sublime_plugin.WindowCommand):
                 "initial_text": tools.default_folder_backup_path,
                 "operation_to_perform": self.restore_folder,
                 "on_change": None,
-                "on_cancel": offline.packagesync_cancelled
+                "on_cancel": tools.packagesync_cancelled
             }
             offline.prompt_for_location()
 
@@ -295,20 +292,19 @@ class PsyncRestoreFolderCommand(sublime_plugin.WindowCommand):
                     "PackageSync: Error while restoring packages from folder")
                 print("PackageSync: Error message: %s" % str(e))
         else:
-            offline.packagesync_cancelled()
+            tools.packagesync_cancelled()
 
 
-class PsyncBackupZipCommand(sublime_plugin.WindowCommand):
+class PsyncLocalBackupZipCommand(sublime_plugin.WindowCommand):
 
-    """ Backup the "/Packages/User" folder to the backup location.
-    This backs up the sublime-settings file created by user settings.
-    Package Control settings file is also inherently backed up. """
+    # def is_enabled(self):
+    #     return True
 
     def run(self):
-        tools.load_settings()
+        psync_settings = tools.get_psync_settings()
 
-        if tools.sync_settings["prompt_for_location"] == False:
-            zip_backup_path = tools.sync_settings["zip_backup_path"]
+        if psync_settings["prompt_for_location"] == False:
+            zip_backup_path = psync_settings["zip_backup_path"]
 
             backup_path = None
             try:
@@ -340,7 +336,7 @@ class PsyncBackupZipCommand(sublime_plugin.WindowCommand):
                 "initial_text": tools.default_zip_backup_path,
                 "operation_to_perform": self.backup_zip,
                 "on_change": None,
-                "on_cancel": offline.packagesync_cancelled
+                "on_cancel": tools.packagesync_cancelled
             }
             offline.prompt_for_location()
 
@@ -380,20 +376,19 @@ class PsyncBackupZipCommand(sublime_plugin.WindowCommand):
                     "PackageSync: Error while backing up packages to zip file")
                 print("PackageSync: Error message: %s" % str(e))
         else:
-            offline.packagesync_cancelled()
+            tools.packagesync_cancelled()
 
 
-class PsyncRestoreZipCommand(sublime_plugin.WindowCommand):
+class PsyncLocalRestoreZipCommand(sublime_plugin.WindowCommand):
 
-    """ Restore the "/Packages/User" folder from the backup location.
-    This restores the sublime-settings file created by user settings.
-    Package Control settings file is also inherently restored. """
+    # def is_enabled(self):
+    #     return True
 
     def run(self):
-        tools.load_settings()
+        psync_settings = tools.get_psync_settings()
 
-        if tools.sync_settings["prompt_for_location"] == False:
-            zip_backup_path = tools.sync_settings["zip_backup_path"]
+        if psync_settings["prompt_for_location"] == False:
+            zip_backup_path = psync_settings["zip_backup_path"]
 
             backup_path = None
             try:
@@ -418,7 +413,7 @@ class PsyncRestoreZipCommand(sublime_plugin.WindowCommand):
                 "initial_text": tools.default_zip_backup_path,
                 "operation_to_perform": self.restore_zip,
                 "on_change": None,
-                "on_cancel": offline.packagesync_cancelled
+                "on_cancel": tools.packagesync_cancelled
             }
             offline.prompt_for_location()
 
@@ -467,5 +462,192 @@ class PsyncRestoreZipCommand(sublime_plugin.WindowCommand):
                     "PackageSync: Error while restoring packages from zip file")
                 print("PackageSync: Error message: %s" % str(e))
         else:
-            offline.packagesync_cancelled()
+            tools.packagesync_cancelled()
 
+
+class PsyncOnlineSyncEnableCommand(sublime_plugin.WindowCommand):
+
+    def is_enabled(self):
+        s = tools.get_psync_settings()
+        return not s.get("online_sync_enabled", False)
+
+    def run(self):
+        s = sublime.load_settings("PackageSync.sublime-settings")
+        s.set("online_sync_enabled", True)
+        sublime.save_settings("PackageSync.sublime-settings")
+
+        # Start watcher
+        tools.start_watcher(tools.get_psync_settings())
+
+        # Run online package syncing module
+        sublime.run_command("psync_online_sync", {"mode": ["pull", "push"]})
+
+
+class PsyncOnlineSyncDisableCommand(sublime_plugin.WindowCommand):
+
+    def is_enabled(self):
+        s = tools.get_psync_settings()
+        return s.get("online_sync_enabled", False)
+
+    def run(self):
+        s = sublime.load_settings("PackageSync.sublime-settings")
+        s.set("online_sync_enabled", False)
+        sublime.save_settings("PackageSync.sublime-settings")
+
+        # Stop watcher
+        tools.stop_watcher()
+
+
+class PsyncOnlineSyncCommand(sublime_plugin.ApplicationCommand):
+
+    def is_enabled(self):
+        s = tools.get_psync_settings()
+        return s.get("online_sync_enabled", False) and s.get("online_sync_folder", False) != False
+
+    def run(self, mode=["pull", "push"], override=False):
+        # Load settings
+        settings = sublime.load_settings("PackageSync.sublime-settings")
+
+        # Check for valid online_sync_folder
+        if not os.path.isdir(settings.get("online_sync_folder")):
+            sublime.error_message(
+                "Invalid path provided for online_sync_folder in PackageSync settings. Online syncing has been turned off. Please correct and retry.\n %s" % settings.get(
+                    "online_sync_folder"))
+            settings.set("online_sync_enabled", False)
+            sublime.save_settings("PackageSync.sublime-settings")
+            return
+
+        # Check if sync is already running
+        if not sync_queue.has("sync_online"):
+            t = online.Sync(mode, override)
+            sync_queue.add(t, "sync_online")
+        else:
+            print("PackageSync: Sync operation already running.")
+
+
+class PsyncOnlinePullItemCommand(sublime_plugin.ApplicationCommand):
+
+    def is_enabled(self):
+        s = tools.get_psync_settings()
+        return s.get("online_sync_enabled", False) and s.get("online_sync_folder", False) and os.path.isdir(s.get("online_sync_folder"))
+
+    def run(self, item):
+        print("PsyncOnlinePullItemCommand %s", item)
+
+        # Start a thread to pull the current item
+        t = online.Sync(mode=["pull"], item=item)
+        sync_queue.add(t)
+
+
+class PsyncOnlinePushItemCommand(sublime_plugin.ApplicationCommand):
+
+    def is_enabled(self):
+        s = tools.get_psync_settings()
+        return s.get("online_sync_enabled", False) and s.get("online_sync_folder", False) and os.path.isdir(s.get("online_sync_folder"))
+
+    def run(self, item):
+        print("PsyncOnlinePushItemCommand %s", item)
+
+        # Start a thread to push the current item
+        t = online.Sync(mode=["push"], item=item)
+        sync_queue.add(t)
+
+
+class PsyncOnlineSyncFolderCommand(sublime_plugin.WindowCommand):
+
+    def is_enabled(self):
+        return not sync_queue.has("sync_online")
+
+    def run(self):
+        # Load settings to provide an initial value for the input panel
+        settings = sublime.load_settings("PackageSync.sublime-settings")
+        settings.clear_on_change("package_sync")
+        sublime.save_settings("PackageSync.sublime-settings")
+
+        sync_folder = settings.get("online_sync_folder")
+
+        # Suggest user dir if nothing set or folder do not exists
+        if not sync_folder:
+            sync_folder = os.path.expanduser("~")
+
+        def get_sync_folder_on_done(path):
+            if not os.path.isdir(path):
+                os.makedirs(path)
+
+            if os.path.isdir(path):
+                if os.listdir(path):
+                    if sublime.ok_cancel_dialog("Backup already exists @ %s \nReplace it?" % path, "Continue"):
+                        override = True
+                    else:
+                        self.window.show_input_panel(
+                            "Online Sync Folder", path, get_sync_folder_on_done, None, tools.packagesync_cancelled)
+                        return
+                else:
+                    override = False
+
+                # Adjust settings
+                settings.set("online_sync_enabled", True)
+                settings.set("online_sync_folder", path)
+
+                # Reset last-run file for Package Control
+                last_run_file = os.path.join(
+                    sublime.packages_path(), "User", "Package Control.last-run")
+                if os.path.isfile(last_run_file):
+                    os.remove(last_run_file)
+
+                # Reset last-run file for PackageSync
+                last_run_file = os.path.join(
+                    sublime.packages_path(), "User", "PackageSync.last-run")
+                if os.path.isfile(last_run_file):
+                    os.remove(last_run_file)
+
+                sublime.save_settings("PackageSync.sublime-settings")
+                sublime.status_message(
+                    "online_sync_folder has been set to \n %s" % path)
+
+                # Restart watcher
+                tools.pause_watcher(local=False)
+                tools.stop_watcher(local=False)
+                tools.start_watcher(tools.get_psync_settings(), local=False)
+
+                # Run pkg_sync
+                sublime.set_timeout(lambda: sublime.run_command(
+                    "psync_online_sync", {"mode": ["pull", "push"], "override": override}), 1000)
+
+            else:
+                sublime.error_message("Invalid Path \n %s" % path)
+
+            # Add an on_change listener
+            sublime.set_timeout(
+                lambda: settings.add_on_change("package_sync", tools.restart_watcher), 500)
+
+        self.window.show_input_panel(
+            "Online Sync Folder", sync_folder, get_sync_folder_on_done, None, tools.packagesync_cancelled)
+
+def plugin_loaded():
+    tools.init_paths()
+
+    s = sublime.load_settings("PackageSync.sublime-settings")
+    s.clear_on_change("package_sync")
+    s.add_on_change("package_sync", tools.restart_watcher)
+    sublime.save_settings("PackageSync.sublime-settings")
+
+    # Start watcher
+    sublime.set_timeout(lambda: tools.start_watcher(tools.get_psync_settings()), 100)
+
+    # Run online package syncing
+    sublime.set_timeout(lambda: sublime.run_command(
+        "psync_online_sync", {"mode": ["pull", "push"]}), 1000)
+
+
+def plugin_unloaded():
+    s = sublime.load_settings("PackageSync.sublime-settings")
+    s.clear_on_change("package_sync")
+    sublime.save_settings("PackageSync.sublime-settings")
+
+    # Stop folder watcher
+    tools.stop_watcher()
+
+
+if sublime.version()[0] == "2":
+    plugin_loaded()

@@ -1,0 +1,8 @@
+=============
+Release 2.0.0
+=============
+
+PackageSync now supports online syncing of packages as well.
+This requires you being signed in into Google Drive, DropBox or the likes.
+
+For usage, please visit https://github.com/utkarsh9891/PackageSync

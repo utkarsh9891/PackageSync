@@ -17,7 +17,7 @@
 	// List of files to ignore when syncing
 	"ignore_files": [
 		"*.DS_Store",
-		"Package Control.last-run",
+		"*.last-run",
 		"Package Control.ca-list",
 		"Package Control.ca-bundle",
 		"Package Control.system-ca-bundle",
@@ -48,4 +48,16 @@
 	// If set as true, PackageSync keeps the existing packages intact. However, their settings are 
 	// overwritten if the backup contains user-settings for the same package.
 	"preserve_packages": true,
+
+	// Toggle to determine if online syncing is enabled or not
+	"online_sync_enabled": false,
+
+	// Folder to use for syncing the backup with online syncing services
+	// This should be the path to a folder inside the Google Drive or DropBox sync folder
+	// Any other online syncing application can be used as well
+	"online_sync_folder": "",
+
+	// The frequency (in seconds) at which PackageSync sohuld poll to see if there are any changes in the local folder
+	// of in the backup in the online sync folder
+	"online_sync_interval": 5,
 }

@@ -2,35 +2,77 @@
   {
     "caption": "Tools",
     "id": "tools",
-    "mnemonic": "t",
+    "mnemonic": "T",
     "children": [
       {
         "caption": "PackageSync",
-        "id": "packageBackup",
+        "id": "packageSync",
         "children": [
           {
-            "caption": "Local - Backup Packages To Zip (Recommended)",
-            "command": "psync_backup_zip"
+            "caption": "Backup/Restore",
+            "id": "packageSyncLocal",
+            "children": [
+              {
+                "caption": "Backup Packages To Zip (Recommended)",
+                "command": "psync_local_backup_zip"
+              },
+              {
+                "caption": "Restore Packages From Zip (Recommended)",
+                "command": "psync_local_restore_zip"
+              },
+              {
+                "caption": "Backup Packages To Folder",
+                "command": "psync_local_backup_folder"
+              },
+              {
+                "caption": "Restore Packages From Folder",
+                "command": "psync_local_restore_folder"
+              },
+              {
+                "caption": "Backup Installed Packages List Only",
+                "command": "psync_local_backup_list"
+              },
+              {
+                "caption": "Restore Installed Packages List Only",
+                "command": "psync_local_restore_list"
+              }
+            ]
           },
           {
-            "caption": "Local - Restore Packages From Zip (Recommended)",
-            "command": "psync_restore_zip"
-          },
-          {
-            "caption": "Local - Backup Packages To Folder",
-            "command": "psync_backup_folder"
-          },
-          {
-            "caption": "Local - Restore Packages From Folder",
-            "command": "psync_restore_folder"
-          },
-          {
-            "caption": "Local - Backup Installed Packages List Only",
-            "command": "psync_backup_list"
-          },
-          {
-            "caption": "Local - Restore Installed Packages List Only",
-            "command": "psync_restore_list"
+            "caption": "Sync Online",
+            "id": "packageSyncOnline",
+            "children": [
+              {
+                "caption": "Enable Syncing",
+                "command": "psync_online_sync_enable"
+              },
+              {
+                "caption": "Disable Syncing",
+                "command": "psync_online_sync_disable"
+              },
+              {
+                "caption": "Define Online Sync Folder",
+                "command": "psync_online_sync_folder"
+              },
+              {
+                "caption": "Push Settings to Online Sync Folder",
+                "command": "psync_online_sync",
+                "args": {
+                  "mode": [
+                    "push"
+                  ]
+                }
+              },
+              {
+                "caption": "Pull Settings from Online Sync Folder",
+                "command": "psync_online_sync",
+                "args": {
+                  "mode": [
+                    "pull"
+                  ]
+                }
+              }
+            ]
           }
         ]
       }
@@ -40,26 +82,27 @@
     "caption": "Preferences",
     "id": "preferences",
     "mnemonic": "n",
-    "children":
-    [
+    "children": [
       {
         "caption": "Package Settings",
         "id": "package-settings",
         "mnemonic": "P",
-        "children":
-        [
+        "children": [
           {
             "caption": "PackageSync",
-            "children":
-            [
+            "children": [
               {
                 "command": "open_file",
-                "args": { "file": "${packages}/PackageSync/PackageSync.sublime-settings" },
+                "args": {
+                  "file": "${packages}/PackageSync/PackageSync.sublime-settings"
+                },
                 "caption": "Settings – Default"
               },
               {
                 "command": "open_file",
-                "args": { "file": "${packages}/User/PackageSync.sublime-settings" },
+                "args": {
+                  "file": "${packages}/User/PackageSync.sublime-settings"
+                },
                 "caption": "Settings – User"
               }
             ]

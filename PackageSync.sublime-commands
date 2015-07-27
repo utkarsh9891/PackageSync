@@ -1,26 +1,56 @@
 [
   {
-    "caption": "PackageSync: Local - Backup Packages To Zip (Recommended)",
-    "command": "psync_backup_zip"
+    "caption": "PackageSync: Backup/Restore - Backup Packages To Zip (Recommended)",
+    "command": "psync_local_backup_zip"
   },
   {
-    "caption": "PackageSync: Local - Restore Packages From Zip (Recommended)",
-    "command": "psync_restore_zip"
+    "caption": "PackageSync: Backup/Restore - Restore Packages From Zip (Recommended)",
+    "command": "psync_local_restore_zip"
   },
   {
-    "caption": "PackageSync: Local - Backup Packages To Folder",
-    "command": "psync_backup_folder"
+    "caption": "PackageSync: Backup/Restore - Backup Packages To Folder",
+    "command": "psync_local_backup_folder"
   },
   {
-    "caption": "PackageSync: Local - Restore Packages From Folder",
-    "command": "psync_restore_folder"
+    "caption": "PackageSync: Backup/Restore - Restore Packages From Folder",
+    "command": "psync_local_restore_folder"
   },
   {
-    "caption": "PackageSync: Local - Backup Installed Packages List Only",
-    "command": "psync_backup_list"
+    "caption": "PackageSync: Backup/Restore - Backup Installed Packages List Only",
+    "command": "psync_local_backup_list"
   },
   {
-    "caption": "PackageSync: Local - Restore Installed Packages List Only",
-    "command": "psync_restore_list"
+    "caption": "PackageSync: Backup/Restore - Restore Installed Packages List Only",
+    "command": "psync_local_restore_list"
+  },
+  {
+    "caption": "PackageSync: Sync Online - Enable Syncing",
+    "command": "psync_online_sync_enable"
+  },
+  {
+    "caption": "PackageSync: Sync Online - Disable Syncing",
+    "command": "psync_online_sync_disable"
+  },
+  {
+    "caption": "PackageSync: Sync Online - Define Online Sync Folder",
+    "command": "psync_online_sync_folder"
+  },
+  {
+    "caption": "PackageSync: Sync Online - Push Settings to Online Sync Folder",
+    "command": "psync_online_sync",
+    "args": {
+      "mode": [
+        "push"
+      ]
+    }
+  },
+  {
+    "caption": "PackageSync: Sync Online - Pull Settings from Online Sync Folder",
+    "command": "psync_online_sync",
+    "args": {
+      "mode": [
+        "pull"
+      ]
+    }
   }
 ]
