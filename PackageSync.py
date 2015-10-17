@@ -20,6 +20,7 @@ except ValueError:
 
 sync_queue = online.Queue()
 
+
 class PsyncLocalBackupListCommand(sublime_plugin.WindowCommand):
 
     # def is_enabled(self):
@@ -66,7 +67,7 @@ class PsyncLocalBackupListCommand(sublime_plugin.WindowCommand):
             offline.prompt_for_location()
 
     def backup_pkg_list(self, backup_path):
-        if backup_path != None:
+        if backup_path is not None:
             try:
                 package_control_settings = sublime.load_settings(
                     "Package Control.sublime-settings")
@@ -131,7 +132,7 @@ class PsyncLocalRestoreListCommand(sublime_plugin.WindowCommand):
             offline.prompt_for_location()
 
     def restore_pkg_list(self, backup_path):
-        if backup_path != None:
+        if backup_path is not None:
             try:
                 print("PackageSync: Restoring package list from %s" %
                       backup_path)
@@ -199,7 +200,7 @@ class PsyncLocalBackupFolderCommand(sublime_plugin.WindowCommand):
             offline.prompt_for_location()
 
     def backup_folder(self, backup_path):
-        if backup_path != None:
+        if backup_path is not None:
             try:
                 offline.create_temp_backup()
 
@@ -255,7 +256,7 @@ class PsyncLocalRestoreFolderCommand(sublime_plugin.WindowCommand):
             offline.prompt_for_location()
 
     def restore_folder(self, backup_path):
-        if backup_path != None:
+        if backup_path is not None:
             try:
                 print(
                     "PackageSync: Restoring package list & user settings from %s" % backup_path)
@@ -341,7 +342,7 @@ class PsyncLocalBackupZipCommand(sublime_plugin.WindowCommand):
             offline.prompt_for_location()
 
     def backup_zip(self, backup_path):
-        if backup_path != None:
+        if backup_path is not None:
             try:
                 offline.create_temp_backup()
 
@@ -418,7 +419,7 @@ class PsyncLocalRestoreZipCommand(sublime_plugin.WindowCommand):
             offline.prompt_for_location()
 
     def restore_zip(self, backup_path):
-        if backup_path != None:
+        if backup_path is not None:
             try:
                 print(
                     "PackageSync: Restoring package list & user settings from %s" % backup_path)
@@ -624,6 +625,7 @@ class PsyncOnlineSyncFolderCommand(sublime_plugin.WindowCommand):
         self.window.show_input_panel(
             "Online Sync Folder", sync_folder, get_sync_folder_on_done, None, tools.packagesync_cancelled)
 
+
 def plugin_loaded():
     tools.init_paths()
 
@@ -633,7 +635,8 @@ def plugin_loaded():
     sublime.save_settings("PackageSync.sublime-settings")
 
     # Start watcher
-    sublime.set_timeout(lambda: tools.start_watcher(tools.get_psync_settings()), 100)
+    sublime.set_timeout(
+        lambda: tools.start_watcher(tools.get_psync_settings()), 100)
 
     # Run online package syncing
     sublime.set_timeout(lambda: sublime.run_command(

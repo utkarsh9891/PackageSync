@@ -101,9 +101,9 @@ def backup_with_prompt_on_done(path):
 
         if sublime.version()[0] == "2":
             if sublime.ok_cancel_dialog(
-                "Backup already exists @ %s \nReplace it?" % path, "Continue") == True:
+                    "Backup already exists @ %s \nReplace it?" % path, "Continue") == True:
                 prompt_parameters["operation_to_perform"](path)
-            
+
             else:
                 tools.packagesync_cancelled()
         else:
