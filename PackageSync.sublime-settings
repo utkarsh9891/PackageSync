@@ -21,7 +21,9 @@
 		"Package Control.ca-list",
 		"Package Control.ca-bundle",
 		"Package Control.system-ca-bundle",
-		"*.sublime-package"
+		"*.sublime-package",
+		"PackageSync.sublime-settings",
+		"PackageSync.last-run"
 	],
 
 	// Files to include, as long they do not match a pattern in files_to_ignore

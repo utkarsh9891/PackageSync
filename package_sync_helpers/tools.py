@@ -20,7 +20,7 @@ def get_psync_settings():
         "list_backup_path": s.get("list_backup_path", ""),
         "zip_backup_path": s.get("zip_backup_path", ""),
         "folder_backup_path": s.get("folder_backup_path", ""),
-        "ignore_files": s.get("ignore_files", []) + ["PackageSync.sublime-settings", "PackageSync.last-run"],
+        "ignore_files": s.get("ignore_files", []),
         "include_files": s.get("include_files", []),
         "ignore_dirs": s.get("ignore_dirs", []),
         "preserve_packages": s.get("preserve_packages", True),
