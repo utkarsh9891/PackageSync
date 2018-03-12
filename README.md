@@ -108,6 +108,8 @@ This should be the path to a folder inside the Google Drive, Dropbox or SkyDrive
 The frequency (in seconds) at which PackageSync should poll to see if there are any changes in the local folder or in the online sync folder.  
 PackageSync will keep your settings up to date across machines by checking regularly at this interval. If you face any performance issues you can increase this time via the settings and a restart of Sublime Text.
 
++ __debug *[boolean, false by default]*__
+Whether or not PackageSync should log to the console. Enable this if you're having issues and want to see PackageSync's activity.
 
 ## Installation
 
