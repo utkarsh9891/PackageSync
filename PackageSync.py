@@ -51,7 +51,7 @@ class PsyncLocalBackupListCommand(sublime_plugin.WindowCommand):
                     backup_path = None
             except Exception as e:
                 tools.log("PackageSync: Error while fetching backup path.", force=True)
-                tools.log("PackageSync: Error message: %s" % str(e))
+                tools.log("PackageSync: Error message: %s" % str(e), force=True)
 
             self.backup_pkg_list(backup_path)
         else:
@@ -88,7 +88,7 @@ class PsyncLocalBackupListCommand(sublime_plugin.WindowCommand):
             except Exception as e:
                 tools.log(
                     "PackageSync: Error while backing up installed packages list", force=True)
-                tools.log("PackageSync: Error message: %s" % str(e))
+                tools.log("PackageSync: Error message: %s" % str(e), force=True)
         else:
             tools.packagesync_cancelled()
 
@@ -116,7 +116,7 @@ class PsyncLocalRestoreListCommand(sublime_plugin.WindowCommand):
                     backup_path = None
             except Exception as e:
                 tools.log("PackageSync: Error while fetching backup path.", force=True)
-                tools.log("PackageSync: Error message: %s" % str(e))
+                tools.log("PackageSync: Error message: %s" % str(e), force=True)
 
             self.restore_pkg_list(backup_path)
         else:
@@ -150,7 +150,7 @@ class PsyncLocalRestoreListCommand(sublime_plugin.WindowCommand):
             except Exception as e:
                 tools.log(
                     "PackageSync: Error while restoring packages from package list", force=True)
-                tools.log("PackageSync: Error message: %s" % str(e))
+                tools.log("PackageSync: Error message: %s" % str(e), force=True)
         else:
             tools.packagesync_cancelled()
 
@@ -184,7 +184,7 @@ class PsyncLocalBackupFolderCommand(sublime_plugin.WindowCommand):
                     backup_path = None
             except Exception as e:
                 tools.log("PackageSync: Error while fetching backup path.", force=True)
-                tools.log("PackageSync: Error message: %s" % str(e))
+                tools.log("PackageSync: Error message: %s" % str(e), force=True)
 
             self.backup_folder(backup_path)
         else:
@@ -212,7 +212,7 @@ class PsyncLocalBackupFolderCommand(sublime_plugin.WindowCommand):
                       backup_path)
             except Exception as e:
                 tools.log("PackageSync: Error while backing up packages to folder", force=True)
-                tools.log("PackageSync: Error message: %s" % str(e))
+                tools.log("PackageSync: Error message: %s" % str(e), force=True)
         else:
             tools.packagesync_cancelled()
 
@@ -240,7 +240,7 @@ class PsyncLocalRestoreFolderCommand(sublime_plugin.WindowCommand):
                     backup_path = None
             except Exception as e:
                 tools.log("PackageSync: Error while fetching backup path.", force=True)
-                tools.log("PackageSync: Error message: %s" % str(e))
+                tools.log("PackageSync: Error message: %s" % str(e), force=True)
 
             self.restore_folder(backup_path)
         else:
@@ -291,7 +291,7 @@ class PsyncLocalRestoreFolderCommand(sublime_plugin.WindowCommand):
             except Exception as e:
                 tools.log(
                     "PackageSync: Error while restoring packages from folder", force=True)
-                tools.log("PackageSync: Error message: %s" % str(e))
+                tools.log("PackageSync: Error message: %s" % str(e), force=True)
         else:
             tools.packagesync_cancelled()
 
@@ -326,7 +326,7 @@ class PsyncLocalBackupZipCommand(sublime_plugin.WindowCommand):
                     backup_path = None
             except Exception as e:
                 tools.log("PackageSync: Error while fetching backup path.", force=True)
-                tools.log("PackageSync: Error message: %s" % str(e))
+                tools.log("PackageSync: Error message: %s" % str(e), force=True)
 
             self.backup_zip(backup_path)
         else:
@@ -375,7 +375,7 @@ class PsyncLocalBackupZipCommand(sublime_plugin.WindowCommand):
             except Exception as e:
                 tools.log(
                     "PackageSync: Error while backing up packages to zip file", force=True)
-                tools.log("PackageSync: Error message: %s" % str(e))
+                tools.log("PackageSync: Error message: %s" % str(e), force=True)
         else:
             tools.packagesync_cancelled()
 
@@ -403,7 +403,7 @@ class PsyncLocalRestoreZipCommand(sublime_plugin.WindowCommand):
                     backup_path = None
             except Exception as e:
                 tools.log("PackageSync: Error while fetching backup path.", force=True)
-                tools.log("PackageSync: Error message: %s" % str(e))
+                tools.log("PackageSync: Error message: %s" % str(e), force=True)
 
             self.restore_zip(backup_path)
         else:
@@ -461,7 +461,7 @@ class PsyncLocalRestoreZipCommand(sublime_plugin.WindowCommand):
             except Exception as e:
                 tools.log(
                     "PackageSync: Error while restoring packages from zip file", force=True)
-                tools.log("PackageSync: Error message: %s" % str(e))
+                tools.log("PackageSync: Error message: %s" % str(e), force=True)
         else:
             tools.packagesync_cancelled()
 

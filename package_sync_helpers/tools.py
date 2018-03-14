@@ -115,7 +115,7 @@ def install_new_packages():
     except Exception as e:
         log(
             "PackageSync: Error while installing packages via Package Control.", force=True)
-        log("PackageSync: Error message: %s" % str(e))
+        log("PackageSync: Error message: %s" % str(e), force=True)
 
 
 def remove_packages(packages_to_remove):
@@ -224,7 +224,7 @@ def save_last_run_data(**kwargs):
             json.dump(last_run_data, f, sort_keys=True, indent=4)
     except Exception as e:
         log("PackageSync: Error while updating PackageSync.last-run", force=True)
-        log("PackageSync: Error message %s" % str(e))
+        log("PackageSync: Error message %s" % str(e), force=True)
 
 
 def get_installed_packages_list(settings_path):

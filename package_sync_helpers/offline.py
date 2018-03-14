@@ -42,7 +42,7 @@ def create_temp_backup():
 
     except Exception as e:
         tools.log("PackageSync: Error while creating temp backup.", force=True)
-        tools.log("PackageSync: Error message: %s" % str(e))
+        tools.log("PackageSync: Error message: %s" % str(e), force=True)
 
 
 def restore_from_temp():
@@ -91,7 +91,7 @@ def restore_from_temp():
 
     except Exception as e:
         tools.log("PackageSync: Error while restoring from backup.", force=True)
-        tools.log("PackageSync: Error message: %s" % str(e))
+        tools.log("PackageSync: Error message: %s" % str(e), force=True)
 
 
 def backup_with_prompt_on_done(path):
