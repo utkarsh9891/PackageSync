@@ -5,6 +5,10 @@
 	// If no location has been specified in settings, by default user's desktop is used for backup.
 	"prompt_for_location": true,
 
+	// Whether or not PackageSync should log its activity to the console. Enable this if you're 
+	// having issues and want to see all of PackageSync's activity.
+	"debug": false,
+
 	// The file path to use for backing up or restoring only the package list
 	"list_backup_path": "",
 	

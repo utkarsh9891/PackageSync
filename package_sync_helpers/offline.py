@@ -41,8 +41,8 @@ def create_temp_backup():
                     os.remove(absolute_path)
 
     except Exception as e:
-        print("PackageSync: Error while creating temp backup.")
-        print("PackageSync: Error message: %s" % str(e))
+        tools.log("PackageSync: Error while creating temp backup.", force=True)
+        tools.log("PackageSync: Error message: %s" % str(e), force=True)
 
 
 def restore_from_temp():
@@ -90,8 +90,8 @@ def restore_from_temp():
                         shutil.move(src_file, dst_root)
 
     except Exception as e:
-        print("PackageSync: Error while restoring from backup.")
-        print("PackageSync: Error message: %s" % str(e))
+        tools.log("PackageSync: Error while restoring from backup.", force=True)
+        tools.log("PackageSync: Error message: %s" % str(e), force=True)
 
 
 def backup_with_prompt_on_done(path):
