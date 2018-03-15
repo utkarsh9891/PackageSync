@@ -21,10 +21,11 @@
 		"Package Control.ca-list",
 		"Package Control.ca-bundle",
 		"Package Control.system-ca-bundle",
-		"*.sublime-package",
-		"PackageSync.sublime-settings",
-		"PackageSync.last-run"
+		"*.sublime-package"
 	],
+
+	// Toggle to determine whether to synchronize user setting for this package (`PackageSync.sublime-settings`).
+	"sync_package_sync_settings": false,
 
 	// Files to include, as long they do not match a pattern in files_to_ignore
 	"include_files": [
