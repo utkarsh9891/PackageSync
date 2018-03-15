@@ -1,0 +1,7 @@
+=============
+Release 2.1.0
+=============
+
+PackageSync now has reduced logging in the Sublime Text console. If you want to see all of PackageSync's logs, then set the `debug` option to `true` in PackageSync.sublime-settings.
+
+For usage, please visit https://github.com/utkarsh9891/PackageSync

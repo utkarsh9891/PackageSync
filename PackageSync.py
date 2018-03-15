@@ -50,8 +50,8 @@ class PsyncLocalBackupListCommand(sublime_plugin.WindowCommand):
                         "Invalid path provided in user-settings. Please correct & then retry.")
                     backup_path = None
             except Exception as e:
-                print("PackageSync: Error while fetching backup path.")
-                print("PackageSync: Error message: %s" % str(e))
+                tools.log("PackageSync: Error while fetching backup path.", force=True)
+                tools.log("PackageSync: Error message: %s" % str(e), force=True)
 
             self.backup_pkg_list(backup_path)
         else:
@@ -83,12 +83,12 @@ class PsyncLocalBackupListCommand(sublime_plugin.WindowCommand):
                     json.dump(
                         {"installed_packages": installed_packages}, _backupFile, indent=4)
 
-                print("PackageSync: Backup of installed packages list created at %s" %
+                tools.log("PackageSync: Backup of installed packages list created at %s" %
                       backup_path)
             except Exception as e:
-                print(
-                    "PackageSync: Error while backing up installed packages list")
-                print("PackageSync: Error message: %s" % str(e))
+                tools.log(
+                    "PackageSync: Error while backing up installed packages list", force=True)
+                tools.log("PackageSync: Error message: %s" % str(e), force=True)
         else:
             tools.packagesync_cancelled()
 
@@ -115,8 +115,8 @@ class PsyncLocalRestoreListCommand(sublime_plugin.WindowCommand):
                         "Invalid path provided in user-settings. Please correct & then retry.")
                     backup_path = None
             except Exception as e:
-                print("PackageSync: Error while fetching backup path.")
-                print("PackageSync: Error message: %s" % str(e))
+                tools.log("PackageSync: Error while fetching backup path.", force=True)
+                tools.log("PackageSync: Error message: %s" % str(e), force=True)
 
             self.restore_pkg_list(backup_path)
         else:
@@ -134,7 +134,7 @@ class PsyncLocalRestoreListCommand(sublime_plugin.WindowCommand):
     def restore_pkg_list(self, backup_path):
         if backup_path is not None:
             try:
-                print("PackageSync: Restoring package list from %s" %
+                tools.log("PackageSync: Restoring package list from %s" %
                       backup_path)
                 with open(backup_path, "r") as f:
                     _installed_packages = json.load(f)["installed_packages"]
@@ -148,9 +148,9 @@ class PsyncLocalRestoreListCommand(sublime_plugin.WindowCommand):
                 tools.install_new_packages()
 
             except Exception as e:
-                print(
-                    "PackageSync: Error while restoring packages from package list")
-                print("PackageSync: Error message: %s" % str(e))
+                tools.log(
+                    "PackageSync: Error while restoring packages from package list", force=True)
+                tools.log("PackageSync: Error message: %s" % str(e), force=True)
         else:
             tools.packagesync_cancelled()
 
@@ -183,8 +183,8 @@ class PsyncLocalBackupFolderCommand(sublime_plugin.WindowCommand):
                         "Invalid path provided in user-settings. Please correct & then retry.")
                     backup_path = None
             except Exception as e:
-                print("PackageSync: Error while fetching backup path.")
-                print("PackageSync: Error message: %s" % str(e))
+                tools.log("PackageSync: Error while fetching backup path.", force=True)
+                tools.log("PackageSync: Error message: %s" % str(e), force=True)
 
             self.backup_folder(backup_path)
         else:
@@ -208,11 +208,11 @@ class PsyncLocalBackupFolderCommand(sublime_plugin.WindowCommand):
                     shutil.rmtree(backup_path, True)
                 shutil.copytree(tools.temp_backup_folder, backup_path)
 
-                print("PackageSync: Backup of packages & settings created at %s" %
+                tools.log("PackageSync: Backup of packages & settings created at %s" %
                       backup_path)
             except Exception as e:
-                print("PackageSync: Error while backing up packages to folder")
-                print("PackageSync: Error message: %s" % str(e))
+                tools.log("PackageSync: Error while backing up packages to folder", force=True)
+                tools.log("PackageSync: Error message: %s" % str(e), force=True)
         else:
             tools.packagesync_cancelled()
 
@@ -239,8 +239,8 @@ class PsyncLocalRestoreFolderCommand(sublime_plugin.WindowCommand):
                         "Invalid path provided in user-settings. Please correct & then retry.")
                     backup_path = None
             except Exception as e:
-                print("PackageSync: Error while fetching backup path.")
-                print("PackageSync: Error message: %s" % str(e))
+                tools.log("PackageSync: Error while fetching backup path.", force=True)
+                tools.log("PackageSync: Error message: %s" % str(e), force=True)
 
             self.restore_folder(backup_path)
         else:
@@ -258,8 +258,8 @@ class PsyncLocalRestoreFolderCommand(sublime_plugin.WindowCommand):
     def restore_folder(self, backup_path):
         if backup_path is not None:
             try:
-                print(
-                    "PackageSync: Restoring package list & user settings from %s" % backup_path)
+                tools.log(
+                    "PackageSync: Restoring package list & user settings from %s" % backup_path, force=True)
                 # Backup PackageSync user settings before restore operation
                 packagesync_settings_backup = os.path.join(
                     tempfile.gettempdir(), str(time.time()))
@@ -269,8 +269,8 @@ class PsyncLocalRestoreFolderCommand(sublime_plugin.WindowCommand):
                 if os.path.exists(packagesync_settings_original):
                     shutil.copy2(
                         packagesync_settings_original, packagesync_settings_backup)
-                    print("PackageSync: PackageSync.sublime-settings backed up to %s" %
-                          packagesync_settings_backup)
+                    tools.log("PackageSync: PackageSync.sublime-settings backed up to %s" %
+                          packagesync_settings_backup, force=True)
 
                 if os.path.exists(tools.temp_restore_folder):
                     shutil.rmtree(tools.temp_restore_folder, True)
@@ -283,15 +283,15 @@ class PsyncLocalRestoreFolderCommand(sublime_plugin.WindowCommand):
                 if os.path.exists(packagesync_settings_backup) and not os.path.exists(packagesync_settings_original):
                     shutil.copy2(
                         packagesync_settings_backup, packagesync_settings_original)
-                    print("PackageSync: PackageSync.sublime-settings restored from %s" %
-                          packagesync_settings_backup)
+                    tools.log("PackageSync: PackageSync.sublime-settings restored from %s" %
+                          packagesync_settings_backup, force=True)
 
                 tools.install_new_packages()
 
             except Exception as e:
-                print(
-                    "PackageSync: Error while restoring packages from folder")
-                print("PackageSync: Error message: %s" % str(e))
+                tools.log(
+                    "PackageSync: Error while restoring packages from folder", force=True)
+                tools.log("PackageSync: Error message: %s" % str(e), force=True)
         else:
             tools.packagesync_cancelled()
 
@@ -325,8 +325,8 @@ class PsyncLocalBackupZipCommand(sublime_plugin.WindowCommand):
                         "Invalid path provided in user-settings. Please correct & then retry.")
                     backup_path = None
             except Exception as e:
-                print("PackageSync: Error while fetching backup path.")
-                print("PackageSync: Error message: %s" % str(e))
+                tools.log("PackageSync: Error while fetching backup path.", force=True)
+                tools.log("PackageSync: Error message: %s" % str(e), force=True)
 
             self.backup_zip(backup_path)
         else:
@@ -370,12 +370,12 @@ class PsyncLocalBackupZipCommand(sublime_plugin.WindowCommand):
                     os.makedirs(os.path.dirname(backup_path))
                 shutil.move(temp_zip_file_path, backup_path)
 
-                print("PackageSync: Zip backup of packages & settings created at %s" %
+                tools.log("PackageSync: Zip backup of packages & settings created at %s" %
                       backup_path)
             except Exception as e:
-                print(
-                    "PackageSync: Error while backing up packages to zip file")
-                print("PackageSync: Error message: %s" % str(e))
+                tools.log(
+                    "PackageSync: Error while backing up packages to zip file", force=True)
+                tools.log("PackageSync: Error message: %s" % str(e), force=True)
         else:
             tools.packagesync_cancelled()
 
@@ -402,8 +402,8 @@ class PsyncLocalRestoreZipCommand(sublime_plugin.WindowCommand):
                         "Invalid path provided in user-settings. Please correct & then retry.")
                     backup_path = None
             except Exception as e:
-                print("PackageSync: Error while fetching backup path.")
-                print("PackageSync: Error message: %s" % str(e))
+                tools.log("PackageSync: Error while fetching backup path.", force=True)
+                tools.log("PackageSync: Error message: %s" % str(e), force=True)
 
             self.restore_zip(backup_path)
         else:
@@ -421,8 +421,8 @@ class PsyncLocalRestoreZipCommand(sublime_plugin.WindowCommand):
     def restore_zip(self, backup_path):
         if backup_path is not None:
             try:
-                print(
-                    "PackageSync: Restoring package list & user settings from %s" % backup_path)
+                tools.log(
+                    "PackageSync: Restoring package list & user settings from %s" % backup_path, force=True)
                 # Backup PackageSync user settings before restore operation
                 packagesync_settings_backup = os.path.join(
                     tempfile.gettempdir(), str(time.time()))
@@ -432,8 +432,8 @@ class PsyncLocalRestoreZipCommand(sublime_plugin.WindowCommand):
                 if os.path.exists(packagesync_settings_original):
                     shutil.copy2(
                         packagesync_settings_original, packagesync_settings_backup)
-                    print("PackageSync: PackageSync.sublime-settings backed up to %s" %
-                          packagesync_settings_backup)
+                    tools.log("PackageSync: PackageSync.sublime-settings backed up to %s" %
+                          packagesync_settings_backup, force=True)
 
                 if os.path.exists(tools.temp_restore_folder):
                     shutil.rmtree(tools.temp_restore_folder, True)
@@ -453,15 +453,15 @@ class PsyncLocalRestoreZipCommand(sublime_plugin.WindowCommand):
                 if os.path.exists(packagesync_settings_backup) and not os.path.exists(packagesync_settings_original):
                     shutil.copy2(
                         packagesync_settings_backup, packagesync_settings_original)
-                    print("PackageSync: PackageSync.sublime-settings restored from %s" %
-                          packagesync_settings_backup)
+                    tools.log("PackageSync: PackageSync.sublime-settings restored from %s" %
+                          packagesync_settings_backup, force=True)
 
                 tools.install_new_packages()
 
             except Exception as e:
-                print(
-                    "PackageSync: Error while restoring packages from zip file")
-                print("PackageSync: Error message: %s" % str(e))
+                tools.log(
+                    "PackageSync: Error while restoring packages from zip file", force=True)
+                tools.log("PackageSync: Error message: %s" % str(e), force=True)
         else:
             tools.packagesync_cancelled()
 
@@ -523,7 +523,7 @@ class PsyncOnlineSyncCommand(sublime_plugin.ApplicationCommand):
             t = online.Sync(mode, override)
             sync_queue.add(t, "sync_online")
         else:
-            print("PackageSync: Sync operation already running.")
+            tools.log("PackageSync: Sync operation already running.", force=True)
 
 
 class PsyncOnlinePullItemCommand(sublime_plugin.ApplicationCommand):
@@ -533,7 +533,7 @@ class PsyncOnlinePullItemCommand(sublime_plugin.ApplicationCommand):
         return s.get("online_sync_enabled", False) and s.get("online_sync_folder", False) and os.path.isdir(s.get("online_sync_folder"))
 
     def run(self, item):
-        print("PsyncOnlinePullItemCommand %s", item)
+        tools.log("PsyncOnlinePullItemCommand %s", item)
 
         # Start a thread to pull the current item
         t = online.Sync(mode=["pull"], item=item)
@@ -547,7 +547,7 @@ class PsyncOnlinePushItemCommand(sublime_plugin.ApplicationCommand):
         return s.get("online_sync_enabled", False) and s.get("online_sync_folder", False) and os.path.isdir(s.get("online_sync_folder"))
 
     def run(self, item):
-        print("PsyncOnlinePushItemCommand %s", item)
+        tools.log("PsyncOnlinePushItemCommand %s", item)
 
         # Start a thread to push the current item
         t = online.Sync(mode=["push"], item=item)

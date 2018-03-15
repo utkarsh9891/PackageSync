@@ -15,6 +15,7 @@ remote_watcher = None
 
 def get_psync_settings():
     s = sublime.load_settings("PackageSync.sublime-settings")
+
     psync_settings = {
         "debug": s.get("debug", False),
         "prompt_for_location": s.get("prompt_for_location", False),
@@ -40,6 +41,12 @@ def set_psync_settings(**kwargs):
     for setting, value in kwargs.items():
         s.set(setting, value)
     sublime.save_settings("PackageSync.sublime-settings")
+
+
+def log(*args, force=False, **kwargs):
+    psync_settings = get_psync_settings()
+    if force or psync_settings.get('debug'):
+        print(*args, **kwargs)
 
 
 def init_paths():
@@ -81,7 +88,7 @@ def add_packagesync_to_installed_packages():
     installed_packages = package_control_settings.get("installed_packages", [])
 
     if "PackageSync" not in installed_packages:
-        print("PackageSync: Adding self to installed packages list")
+        log("PackageSync: Adding self to installed packages list")
         installed_packages.append("PackageSync")
 
     package_control_settings.set("installed_packages", installed_packages)
@@ -111,13 +118,13 @@ def install_new_packages():
         sublime.set_timeout(run_package_control_cleanup, 1000)
 
     except Exception as e:
-        print(
-            "PackageSync: Error while installing packages via Package Control.")
-        print("PackageSync: Error message: %s" % str(e))
+        log(
+            "PackageSync: Error while installing packages via Package Control.", force=True)
+        log("PackageSync: Error message: %s" % str(e), force=True)
 
 
 def remove_packages(packages_to_remove):
-    print("PackageSync: remove packages %s" % packages)
+    log("PackageSync: remove packages %s" % packages)
 
     # Reset wait_flag
     wait_flag = [True]
@@ -221,8 +228,8 @@ def save_last_run_data(**kwargs):
         with open(os.path.join(sublime.packages_path(), "User", "PackageSync.last-run"), "w", encoding="utf8") as f:
             json.dump(last_run_data, f, sort_keys=True, indent=4)
     except Exception as e:
-        print("PackageSync: Error while updating PackageSync.last-run")
-        print("PackageSync: Error message %s" % str(e))
+        log("PackageSync: Error while updating PackageSync.last-run", force=True)
+        log("PackageSync: Error message %s" % str(e), force=True)
 
 
 def get_installed_packages_list(settings_path):
@@ -236,7 +243,7 @@ def get_installed_packages_list(settings_path):
 
 
 def packagesync_cancelled():
-    print("PackageSync: Backup/Restore/Sync operation cancelled")
+    log("PackageSync: Backup/Restore/Sync operation cancelled", force=True)
 
 
 def start_watcher(psync_settings, local=True, remote=True):
@@ -355,10 +362,10 @@ class Watcher(object):
         self.pause = False
 
     def __del__(self):
-        print("Watcher stopped")
+        log("Watcher stopped")
         for key, value in self.files_map.items():
             pass
-            # print("PackageSync: Stopped watching %s" % value["path"])
+            # log("PackageSync: Stopped watching %s" % value["path"])
 
     def get_sync_items(self, walk=False):
         sync_items = []
@@ -401,7 +408,7 @@ class Watcher(object):
                     lambda: sublime.run_command(self.callback, {"item": item}), 0)
             else:
                 pass
-                # print(
+                # log(
                 #     "PackageSync: Inside check_file - Callback skipped for %s" % item)
 
     def update_files(self):
@@ -421,7 +428,7 @@ class Watcher(object):
                 self.watch(item)
 
     def watch(self, item):
-        # print("PackageSync: Started watching %s" % item["path"])
+        # log("PackageSync: Started watching %s" % item["path"])
         self.files_map[item["key"]] = item
         item = dict({"type": "c"}, **item)
 
@@ -431,10 +438,10 @@ class Watcher(object):
                 lambda: sublime.run_command(self.callback, {"item": item}), 0)
         else:
             pass
-            # print("PackageSync: Inside watch - Callback skipped for %s" % item)
+            # log("PackageSync: Inside watch - Callback skipped for %s" % item)
 
     def unwatch(self, item):
-        # print("PackageSync: Stopped watching %s" % item["path"])
+        # log("PackageSync: Stopped watching %s" % item["path"])
         del self.files_map[item["key"]]
         item = dict({"type": "d"}, **item)
 
@@ -444,5 +451,5 @@ class Watcher(object):
                 lambda: sublime.run_command(self.callback, {"item": item}), 0)
         else:
             pass
-            # print(
+            # log(
             #     "PackageSync: Inside unwatch - Callback skipped for %s" % item)

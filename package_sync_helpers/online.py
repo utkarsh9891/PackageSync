@@ -69,7 +69,7 @@ class Sync(threading.Thread):
 
         # If no item pull and push all
         if not self.item:
-            print("PackageSync: Complete sync started.")
+            tools.log("PackageSync: Complete sync started.", force=True)
 
             # Fetch all items from the remote location
             if "pull" in self.mode:
@@ -79,7 +79,7 @@ class Sync(threading.Thread):
             if "push" in self.mode:
                 self.push_all()
 
-            print("PackageSync: Complete sync done.")
+            tools.log("PackageSync: Complete sync done.", force=True)
         else:
             # Pull the selected item
             if "pull" in self.mode:
@@ -94,16 +94,16 @@ class Sync(threading.Thread):
             False, local="pull" in self.mode, remote="push" in self.mode)
 
     def find_files(self, path):
-        print("PackageSync: find_files started for %s" % path)
+        tools.log("PackageSync: find_files started for %s" % path)
 
         include_files = self.psync_settings["include_files"]
         ignore_files = self.psync_settings["ignore_files"]
         ignore_dirs = self.psync_settings["ignore_dirs"]
 
-        # print("PackageSync: path %s" % path)
-        # print("PackageSync: include_files %s" % include_files)
-        # print("PackageSync: ignore_files %s" % ignore_files)
-        # print("PackageSync: ignore_dirs %s" % ignore_dirs)
+        # tools.log("PackageSync: path %s" % path)
+        # tools.log("PackageSync: include_files %s" % include_files)
+        # tools.log("PackageSync: ignore_files %s" % ignore_files)
+        # tools.log("PackageSync: ignore_dirs %s" % ignore_dirs)
 
         resources = {}
         for root, dirs, files in os.walk(path):
@@ -127,7 +127,7 @@ class Sync(threading.Thread):
         return resources
 
     def pull_all(self):
-        print("PackageSync: pull_all started with override = %s" %
+        tools.log("PackageSync: pull_all started with override = %s" %
               self.override)
 
         local_dir = os.path.join(sublime.packages_path(), "User")
@@ -146,10 +146,10 @@ class Sync(threading.Thread):
         deleted_remote_data = [
             key for key in last_run_data_remote if key not in remote_data]
 
-        # print("PackageSync: local_data: %s" % local_data)
-        # print("PackageSync: remote_data: %s" % remote_data)
-        # print("PackageSync: deleted_local_data: %s" % deleted_local_data)
-        # print("PackageSync: deleted_remote_data: %s" % deleted_remote_data)
+        # tools.log("PackageSync: local_data: %s" % local_data)
+        # tools.log("PackageSync: remote_data: %s" % remote_data)
+        # tools.log("PackageSync: deleted_local_data: %s" % deleted_local_data)
+        # tools.log("PackageSync: deleted_remote_data: %s" % deleted_remote_data)
 
         diff = [{"type": "d", "key": key}
                 for key in last_run_data_remote if key not in remote_data]
@@ -170,7 +170,7 @@ class Sync(threading.Thread):
             last_run_data_remote=self.find_files(remote_dir))
 
     def pull(self, item):
-        print("PackageSync: pull started for %s" % item)
+        tools.log("PackageSync: pull started for %s" % item)
 
         local_dir = os.path.join(sublime.packages_path(), "User")
         remote_dir = self.psync_settings.get("sync_folder")
@@ -207,7 +207,7 @@ class Sync(threading.Thread):
 
                 # Check if the watcher detects a file again
                 if last_run_data_local[item["key"]]["version"] == item["version"]:
-                    # print("PackageSync: Already pulled")
+                    # tools.log("PackageSync: Already pulled")
                     return
         except:
             pass
@@ -219,7 +219,7 @@ class Sync(threading.Thread):
                 os.makedirs(target_dir)
 
             shutil.copy2(item["path"], target)
-            print("PackageSync: Created %s" % target)
+            tools.log("PackageSync: Created %s" % target)
             #
             last_run_data_local[item["key"]] = {
                 "path": target, "dir": item["dir"], "version": item["version"]}
@@ -230,7 +230,7 @@ class Sync(threading.Thread):
         elif item["type"] == "d":
             if os.path.isfile(target):
                 os.remove(target)
-                print("PackageSync: Deleted %s" % target)
+                tools.log("PackageSync: Deleted %s" % target)
 
             try:
                 del last_run_data_local[item["key"]]
@@ -248,7 +248,7 @@ class Sync(threading.Thread):
             if not os.path.isdir(target_dir):
                 os.mkdir(target_dir)
             shutil.copy2(item["path"], target)
-            print("PackageSync: Updated %s" % target)
+            tools.log("PackageSync: Updated %s" % target)
             #
             last_run_data_local[item["key"]] = {
                 "path": target, "dir": item["dir"], "version": item["version"]}
@@ -272,15 +272,15 @@ class Sync(threading.Thread):
         to_remove = [
             item for item in previous_installed_packages if item not in installed_packages]
 
-        print("PackageSync: install: %s", to_install)
-        print("PackageSync: remove: %s", to_remove)
+        tools.log("PackageSync: install: %s", to_install)
+        tools.log("PackageSync: remove: %s", to_remove)
 
         # Check for old remove_packages
         packages_to_remove = last_run_data.get("packages_to_remove", [])
         packages_to_remove += [item for item in to_remove if item !=
                                "Package Control" and item not in packages_to_remove]
 
-        print("PackageSync: packages_to_remove %s", packages_to_remove)
+        tools.log("PackageSync: packages_to_remove %s", packages_to_remove)
 
         if packages_to_remove:
             removed_packages = tools.remove_packages(packages_to_remove)
@@ -296,7 +296,7 @@ class Sync(threading.Thread):
             packages_to_remove=[item for item in packages_to_remove if item not in removed_packages])
 
     def push_all(self):
-        print("PackageSync: push_all started with override = %s" %
+        tools.log("PackageSync: push_all started with override = %s" %
               self.override)
 
         local_dir = os.path.join(sublime.packages_path(), "User")
@@ -315,10 +315,10 @@ class Sync(threading.Thread):
         deleted_remote_data = [
             key for key in last_run_data_remote if key not in remote_data]
 
-        # print("PackageSync: local_data: %s" % local_data)
-        # print("PackageSync: remote_data: %s" % remote_data)
-        # print("PackageSync: deleted_local_data: %s" % deleted_local_data)
-        # print("PackageSync: deleted_remote_data: %s" % deleted_remote_data)
+        # tools.log("PackageSync: local_data: %s" % local_data)
+        # tools.log("PackageSync: remote_data: %s" % remote_data)
+        # tools.log("PackageSync: deleted_local_data: %s" % deleted_local_data)
+        # tools.log("PackageSync: deleted_remote_data: %s" % deleted_remote_data)
 
         diff = [{"type": "d", "key": key}
                 for key in last_run_data_local if key not in local_data]
@@ -339,7 +339,7 @@ class Sync(threading.Thread):
             last_run_data_remote=self.find_files(remote_dir))
 
     def push(self, item):
-        print("PackageSync: push started for %s" % item)
+        tools.log("PackageSync: push started for %s" % item)
 
         local_dir = os.path.join(sublime.packages_path(), "User")
         remote_dir = self.psync_settings.get("online_sync_folder")
@@ -353,7 +353,7 @@ class Sync(threading.Thread):
         try:
             if item["type"] == "c" or item["type"] == "m":
                 if last_run_data_remote[item["key"]]["version"] == item["version"]:
-                    print("PackageSync: Already pushed")
+                    tools.log("PackageSync: Already pushed")
                     return
         except:
             pass
@@ -368,7 +368,7 @@ class Sync(threading.Thread):
                 os.makedirs(target_dir)
 
             shutil.copy2(item["path"], target)
-            print("PackageSync: Created %s" % target)
+            tools.log("PackageSync: Created %s" % target)
             #
             last_run_data_local[item["key"]] = {
                 "path": item["path"], "dir": item["dir"], "version": item["version"]}
@@ -378,7 +378,7 @@ class Sync(threading.Thread):
         elif item["type"] == "d":
             if os.path.isfile(target):
                 os.remove(target)
-                print("PackageSync: Deleted %s" % target)
+                tools.log("PackageSync: Deleted %s" % target)
 
             try:
                 del last_run_data_local[item["key"]]
@@ -394,7 +394,7 @@ class Sync(threading.Thread):
             if not os.path.isdir(target_dir):
                 os.mkdir(target_dir)
             shutil.copy2(item["path"], target)
-            print("PackageSync: Updated %s" % target)
+            tools.log("PackageSync: Updated %s" % target)
             #
             last_run_data_local[item["key"]] = {
                 "path": item["path"], "dir": item["dir"], "version": item["version"]}
