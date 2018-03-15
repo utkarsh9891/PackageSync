@@ -1,0 +1,7 @@
+=============
+Release 2.1.1
+=============
+
+PackageSync now can choose to synchronize user setting or not.
+
+For usage, please visit https://github.com/utkarsh9891/PackageSync

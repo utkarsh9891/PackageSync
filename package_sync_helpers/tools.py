@@ -16,6 +16,7 @@ remote_watcher = None
 def get_psync_settings():
     s = sublime.load_settings("PackageSync.sublime-settings")
     psync_settings = {
+        "debug": s.get("debug", False),
         "prompt_for_location": s.get("prompt_for_location", False),
         "list_backup_path": s.get("list_backup_path", ""),
         "zip_backup_path": s.get("zip_backup_path", ""),
