@@ -78,6 +78,10 @@ The list of files to ignore when backing up.
 It supports wildcarded file names as well. Supported wildcard entries are '*', '?', '[seq]' & '[!seq]'. For further details, please see the [fnmatch documentation](https://docs.python.org/2/library/fnmatch.html).  
 > Files ignored by default are \*.DS_Store, \*.last-run, Package Control.ca-list, Package Control.ca-bundle, Package Control.system-ca-bundle & \*.sublime-package.
 
++ __sync_package_sync_settings *[boolean, false by default]*__  
+Toggle to determine whether to synchronize user setting for this package (`PackageSync.sublime-settings`).
+> Caution: Use this feature very cautiously. This overrides your PackageSync settings across the synced devices. If you wish to keep different sync folder paths across the devices, DO NOT set this as True
+
 + __include_files *[array]*__  
 The list of files to include when backing up.  
 Note: __*ignore_files holds higher priority as compared to include_files*__. So a file matching both the settings would essentially be ignored, as governed by ignore_files.  
