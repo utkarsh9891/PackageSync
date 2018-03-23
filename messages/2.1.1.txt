@@ -2,6 +2,6 @@
 Release 2.1.1
 =============
 
-PackageSync now can choose to synchronize user setting or not.
+You now have support to sync your PackageSync settings across devices as well. Do use this with caution though!!!
 
 For usage, please visit https://github.com/utkarsh9891/PackageSync
