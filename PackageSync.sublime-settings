@@ -28,6 +28,12 @@
 		"*.sublime-package"
 	],
 
+	// Toggle to determine whether to synchronize user setting for this package (`PackageSync.sublime-settings`).
+	// Caution: Use this feature very cautiously.
+	// This overrides your PackageSync settings across the synced devices.
+	// If you wish to keep different sync folder paths across the devices, DO NOT set this as True
+	"sync_package_sync_settings": false,
+
 	// Files to include, as long they do not match a pattern in files_to_ignore
 	"include_files": [
 		"*.sublime-*",
